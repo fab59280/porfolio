@@ -2,12 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EntreprisesRepository")
+ * @ApiResource( attributes={
+ *     "security"="is_granted('ROLE_ADMIN')",
+ *     "normalization_context"={"groups"={"read"}},
+ *     "order"={"name"="ASC"}
+ *     }
+ *     )
  */
 class Entreprises
 {
@@ -15,38 +24,55 @@ class Entreprises
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read"})
      */
     private $type;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Addresses", inversedBy="entreprises")
-     */
-    private $addresses;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Addresses", cascade={"persist", "remove"})
+     * @Groups({"read"})
+     * @ApiSubresource(maxDepth=1)
      */
     private $address;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Contacts", mappedBy="entreprises")
+     * @Groups({"read"})
+     * @ApiSubresource(maxDepth=1)
      */
     private $contacts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Dates", mappedBy="entreprise")
+     * @Groups({"read"})
+     * @ApiSubresource(maxDepth=1)
      */
     private $dates;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Missions", mappedBy="entreprise")
+     * @Groups({"read"})
+     * @ApiSubresource(maxDepth=1)
      */
     private $missions;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read"})
+     */
+    private $siret;
 
 
     public function __construct()
@@ -69,18 +95,6 @@ class Entreprises
     public function setType(?string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getAddresses(): ?Addresses
-    {
-        return $this->addresses;
-    }
-
-    public function setAddresses(?Addresses $addresses): self
-    {
-        $this->addresses = $addresses;
 
         return $this;
     }
@@ -186,6 +200,30 @@ class Entreprises
                 $mission->setEntreprise(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSiret(): ?string
+    {
+        return $this->siret;
+    }
+
+    public function setSiret(?string $siret): self
+    {
+        $this->siret = $siret;
 
         return $this;
     }

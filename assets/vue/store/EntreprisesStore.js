@@ -1,0 +1,143 @@
+import EntrepriseAPI from "../api/entreprisesApi";
+
+const CREATING_ENTREPRISE      = "CREATING_ENTREPRISE",
+  CREATING_ENTREPRISE_SUCCESS  = "CREATING_ENTREPRISE_SUCCESS",
+  CREATING_ENTREPRISE_ERROR    = "CREATING_ENTREPRISE_ERROR",
+  FETCHING_ENTREPRISES         = "FETCHING_ENTREPRISES",
+  FETCHING_CONTACTS            = "FETCHING_CONTACTS",
+  FETCHING_ENTREPRISES_SUCCESS = "FETCHING_ENTREPRISES_SUCCESS",
+  FETCHING_CONTACTS_SUCCESS    = "FETCHING_CONTACTS_SUCCESS",
+  FETCHING_ENTREPRISE_SUCCESS  = "FETCHING_ENTREPRISE_SUCCESS",
+  FETCHING_ENTREPRISES_ERROR   = "FETCHING_ENTREPRISES_ERROR";
+
+
+export default {
+  namespaced: true,
+  state:      {
+    isLoading: false,
+    error:     null,
+    entreprises:   [],
+    entreprise: "",
+    contacts: []
+  },
+  getters:    {
+    isLoading(state) {
+      return state.isLoading;
+    },
+    hasError(state) {
+      return state.error !== null;
+    },
+    error(state) {
+      return state.error;
+    },
+    hasEntreprises(state) {
+      return state.entreprises.length > 0;
+    },
+    hasEntreprise(state) {
+      return state.entreprise !== "";
+    },
+    entreprises(state) {
+      return state.entreprises;
+    },
+    entreprise(state) {
+      return state.entreprise;
+    },
+    contacts(state) {
+      return state.contacts;
+    }
+  },
+  mutations:  {
+    [CREATING_ENTREPRISE](state) {
+      state.isLoading = true;
+      state.error     = null;
+    },
+    [CREATING_ENTREPRISE_SUCCESS](state, entreprise) {
+      state.isLoading = false;
+      state.error     = null;
+      state.entreprises.unshift(entreprise);
+    },
+    [CREATING_ENTREPRISE_ERROR](state, error) {
+      state.isLoading = false;
+      state.error     = error;
+      state.entreprises   = [];
+    },
+    [FETCHING_ENTREPRISES](state) {
+      state.isLoading = true;
+      state.error     = null;
+      state.entreprises   = [];
+    },
+    [FETCHING_CONTACTS](state) {
+      state.isLoading = true;
+      state.error     = null;
+      state.contacts   = [];
+    },
+    [FETCHING_ENTREPRISES_SUCCESS](state, entreprises) {
+      state.isLoading = false;
+      state.error     = null;
+      state.entreprises   = entreprises;
+    },
+    [FETCHING_ENTREPRISE_SUCCESS](state, entreprise) {
+      state.isLoading = false;
+      state.error     = null;
+      state.entreprise   = entreprise;
+    },
+    [FETCHING_CONTACTS_SUCCESS](state) {
+      state.isLoading = false;
+      state.error     = null;
+      state.contacts   = [];
+    },
+    [FETCHING_ENTREPRISES_ERROR](state, error) {
+      state.isLoading = false;
+      state.error     = error;
+      state.entreprises   = [];
+    }
+  },
+  actions:    {
+    async create({commit}, entreprise) {
+      commit(CREATING_ENTREPRISE);
+      try {
+        let response = await EntrepriseAPI.create(entreprise);
+        commit(CREATING_ENTREPRISE_SUCCESS, response.data);
+        return response.data;
+      } catch (error) {
+        commit(CREATING_ENTREPRISE_ERROR, error);
+        return null;
+      }
+    },
+    async findAll({commit}) {
+      commit(FETCHING_ENTREPRISES);
+      try {
+        let response = await EntrepriseAPI.findAll();
+        commit(FETCHING_ENTREPRISES_SUCCESS, response.data);
+        return response.data;
+      } catch (error) {
+        commit(FETCHING_ENTREPRISES_ERROR, error);
+        return null;
+      }
+    },
+    async findById({commit}, id) {
+      commit(FETCHING_ENTREPRISES);
+      try {
+        let response = await EntrepriseAPI.findOneById(id);
+        commit(FETCHING_ENTREPRISE_SUCCESS, response.data);
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        commit(FETCHING_ENTREPRISES_ERROR, error);
+        return null;
+      }
+    },
+    async findContacts({commit}, url) {
+      commit(FETCHING_CONTACTS);
+      try {
+        let response = await EntrepriseAPI.findSubResource(url);
+        response.data.is_initialized = true;
+        commit(FETCHING_CONTACTS_SUCCESS, response.data);
+        return response.data;
+      } catch (error) {
+        commit(FETCHING_ENTREPRISES_ERROR, error);
+        return null;
+      }
+    },
+  }
+};

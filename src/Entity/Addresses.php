@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AddressesRepository")
+ * @ApiResource(attributes={"security"="is_granted('ROLE_ADMIN')",
+ *     "normalization_context"={"groups"={"read"}}
+ *     })
  */
 class Addresses
 {
@@ -15,28 +18,27 @@ class Addresses
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $country;
-
-    public function __construct()
-    {
-        $this->entreprises = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {

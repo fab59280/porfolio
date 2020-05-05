@@ -2,12 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TechnologiesRepository")
+ * @ApiResource(attributes={
+ *     "security"="is_granted('ROLE_ADMIN')",
+ *     "normalization_context"={"groups"={"read"}}
+ *     })
  */
 class Technologies
 {
@@ -15,26 +23,31 @@ class Technologies
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"read"})
      */
     private $tjm_region;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"read"})
      */
     private $tjm_france;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Missions", mappedBy="technos")
+     * @ApiSubresource(maxDepth=1)
      */
     private $missions;
 

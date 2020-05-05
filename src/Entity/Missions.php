@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MissionsRepository")
+ * @ApiResource(attributes={"security"="is_granted('ROLE_ADMIN')"})
  */
 class Missions
 {
@@ -51,11 +54,13 @@ class Missions
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprises", inversedBy="missions")
      * @ORM\JoinColumn(nullable=false)
+     * @ApiSubresource(maxDepth=1)
      */
     private $entreprise;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Technologies", inversedBy="missions")
+     * @ApiSubresource(maxDepth=1)
      */
     private $technos;
 
