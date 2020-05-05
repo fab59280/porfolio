@@ -40,6 +40,12 @@ class Addresses
      */
     private $country;
 
+    /**
+     * @ORM\Column(type="string", length=5)
+     * @Groups({"read"})
+     */
+    private $postcode;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +83,18 @@ class Addresses
     public function setCountry(string $country): self
     {
         $this->country = $country;
+
+        return $this;
+    }
+
+    public function getPostcode(): ?string
+    {
+        return $this->postcode;
+    }
+
+    public function setPostcode(string $postcode): self
+    {
+        $this->postcode = $postcode;
 
         return $this;
     }

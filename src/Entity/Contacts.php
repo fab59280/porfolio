@@ -65,6 +65,11 @@ class Contacts
      */
     private $dates;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $role;
+
     public function __construct()
     {
         $this->mails      = new ArrayCollection();
@@ -203,6 +208,18 @@ class Contacts
                 $date->setContact(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): self
+    {
+        $this->role = $role;
 
         return $this;
     }
