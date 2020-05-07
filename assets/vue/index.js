@@ -12,3 +12,4 @@ new Vue(
   }
 ).$mount("#app");
 
+import '../scss/app.scss';

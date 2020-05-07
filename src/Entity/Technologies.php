@@ -29,21 +29,21 @@ class Technologies
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"read"})
+     * @ORM\Column(type="integer", nullable=true, name="tjm_region")
+     * @Groups({"read", "write"})
      */
-    private $tjm_region;
+    private $tjmRegion;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"read"})
+     * @ORM\Column(type="integer", nullable=true, name="tjm_france")
+     * @Groups({"read", "write"})
      */
-    private $tjm_france;
+    private $tjmFrance;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Missions", mappedBy="technos")
@@ -75,24 +75,24 @@ class Technologies
 
     public function getTjmRegion(): ?int
     {
-        return $this->tjm_region;
+        return $this->tjmRegion;
     }
 
-    public function setTjmRegion(?int $tjm_region): self
+    public function setTjmRegion(?int $tjmRegion): self
     {
-        $this->tjm_region = $tjm_region;
+        $this->tjmRegion = $tjmRegion;
 
         return $this;
     }
 
     public function getTjmFrance(): ?int
     {
-        return $this->tjm_france;
+        return $this->tjmFrance;
     }
 
-    public function setTjmFrance(?int $tjm_france): self
+    public function setTjmFrance(?int $tjmFrance): self
     {
-        $this->tjm_france = $tjm_france;
+        $this->tjmFrance = $tjmFrance;
 
         return $this;
     }

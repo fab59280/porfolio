@@ -3,7 +3,7 @@
     <div class="row col">
       <h1>Entreprises</h1>
     </div>
-
+    <!--
     <div class="row col list-group">
       <fieldset
         title="Add a new Technology"
@@ -58,7 +58,7 @@
           </div>
         </form>
       </fieldset>
-    </div>
+    </div>-->
 
     <div
       v-if="isLoading"
@@ -85,18 +85,38 @@
     >
       No entreprises found!
     </div>
+
     <ul
       v-else
       class="list-group row col"
     >
+      <li>
+        <div class="form-row">
+          <div class="col-4">
+            <label for="name">Name</label>
+          </div>
+          <div class="col-4">
+            <label for="tjmRegion">Type</label>
+          </div>
+          <div class="col-4">
+            <label for="tjmRegion">Localité</label>
+          </div>
+          <div class="col-4">
+            <label for="tjmFrance">Siret</label>
+          </div>
+          <div class="col-4">
+            <label for="actions">Actions</label>
+          </div>
+        </div>
+      </li>
       <li
-        v-for="(entreprise, index) in getEntreprises"
+        v-for="(entreprise, index) in entreprises"
         :key="entreprise.id"
         :class="{'list-group-item list-group-item-info': index % 2 === 0, 'list-group-item list-group-item-primary': index % 2
           !==
           0 }"
       >
-        <div class="row col">
+        <!--<div class="row col">
           <div class="col-12 col-lg-3">
             {{ entreprise.name }}
           </div>
@@ -130,23 +150,24 @@
               :title="'Voir l\'entreprise' + entreprise.name"
             >Détails </a>
           </div>
-        </div>
+        </div>-->
+        <entreprises-component :entreprise="entreprise" />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import EntreprisesComponent from "../components/EntreprisesComponent";
 
 export default {
   name:      "EntreprisesView",
+  components: {
+    EntreprisesComponent
+  },
   data() {
     return {
-      entreprises: {
-        name: "",
-        type: "",
-        siret: ""
-      }
+      entreprises: []
     };
   },
   computed:  {
@@ -166,8 +187,11 @@ export default {
       return this.$store.getters["entreprise/entreprises"];
     }
   },
+  beforeMount() {
+    this.hydrate();
+  },
   created() {
-    this.$store.dispatch("entreprise/findAll");
+    this.hydrate();
   },
   methods:   {
     async createPost() {
@@ -181,6 +205,12 @@ export default {
       if (result !== null) {
         this.$data.entreprises = this.$store.getters["entreprise/entreprises"];
       }
+    },
+    async hydrate() {
+      await this.$store.dispatch("entreprise/findAll")
+        .then(data => {
+          this.$data.entreprises = data;
+        })
     }
   }
 };

@@ -2,10 +2,9 @@ import axios from "axios";
 
 export default {
   create(entreprise) {
+    console.log(entreprise);
     return axios.post("/api/entreprises", {
-      "type":     entreprise.type,
-      "name":     entreprise.name,
-      "siret":    entreprise.siret
+      entreprise
     }, {
       headers: {
         "accept":       "application/json",
