@@ -4,14 +4,10 @@
 namespace App\Controller;
 
 
-use ApiPlatform\Core\Serializer\JsonEncoder;
-use App\Entity\Entreprises;
-use App\Repository\EntreprisesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class HomeController extends AbstractController
 {
@@ -21,14 +17,29 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route(path="/vue/{VueRouter}", name="homepage")
-     * @param Request $request
+     * @Route(path="/", name="homepage")
+     * @param SerializerInterface $serializer
      *
      * @return Response
      */
-    public function homepage(Request $request): Response
+    public function homepage(SerializerInterface $serializer): Response
     {
-        return $this->render('base.html.twig');
+        return $this->render('base.html.twig', [
+            'user' => $serializer->serialize($this->getUser(), 'jsonld')
+        ]);
+    }
+
+    /**
+     * @Route(path="/{VueRouter}", name="vue_routes", requirements={"VueRouter"="^(?!api|admin|logout).*"}, methods={"GET"})
+     * @param SerializerInterface $serializer
+     *
+     * @return Response
+     */
+    public function vueRoutes(SerializerInterface $serializer): Response
+    {
+        return $this->render('base.html.twig', [
+            'user' => $serializer->serialize($this->getUser(), 'jsonld')
+        ]);
     }
 
 }

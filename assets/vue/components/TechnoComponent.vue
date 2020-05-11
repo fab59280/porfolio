@@ -11,7 +11,7 @@
         :id="'item-techno-name-' + index"
         v-model="techno.name"
         type="text"
-        class="form-control"
+        class="card-inputx"
         @keydown.enter="updateTechno"
         @keydown.esc="cancelEditing"
       >
@@ -25,7 +25,7 @@
         :id="'item-techno-tjmRegion-' + index"
         v-model="techno.tjmRegion"
         type="text"
-        class="form-control"
+        class="card-inputx"
         @keydown.enter="updateTechno"
         @keydown.esc="cancelEditing"
       >
@@ -39,7 +39,7 @@
         :id="'item-techno-tjmFrance-' + index"
         v-model="techno.tjmFrance"
         type="text"
-        class="form-control"
+        class="card-input"
         @keydown.enter="updateTechno"
         @keydown.esc="cancelEditing"
       >
@@ -47,7 +47,7 @@
     <div class="col-3">
       <a
         href="#"
-        class="btn btn-md btn-info"
+        class="card-link card-link-primary"
         :title="'Edit ' + techno.name"
         @click.prevent="startEditing(techno, index)"
       >
@@ -55,7 +55,7 @@
       </a>
       <a
         href="#"
-        class="btn btn-md btn-danger"
+        class="card-link card-link-danger"
         :title="'Delete ' + techno.name "
         @click.prevent="deleteEditing(techno, index)"
       >

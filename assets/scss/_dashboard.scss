@@ -1,0 +1,31 @@
+.dashboard-link-btn-wrap {
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 0;
+    li {
+        display: inline-block;
+        margin-right: 1.25rem;
+        @media (max-width: 480px) {
+            margin-right: .3rem;
+            margin-top: .625rem;
+            margin-bottom: .625rem;
+        }
+        a {
+            color: $body-color;
+            font-size: .875rem;
+            font-weight: bold;
+            span {
+                background: $dark;
+                border-radius:2px;
+                text-align: center;
+                padding: 3px;
+                margin-right: 5px;
+            ;
+            }
+            &:hover {
+                text-decoration: none;
+                color: theme-color(danger)
+            }
+        }
+    }
+}

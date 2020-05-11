@@ -1,0 +1,44 @@
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+}
+
+
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
+}
+
+
+@function color($color, $palette: $colors) {
+    @return map-get($palette, $color);
+}
+
+
+@function typeface($value) {
+    @return map-get($typefaces, $value);
+}
+
+
+@function type-size($value: m) {
+    @return map-get($type-scale, $value);
+}
+
+
+@function container($type: general) {
+    @return map-get($containers, $type);
+}
+
+@function decimal-round($number, $digits: 2) {
+    $n : 1;
+    @for $i from 1 through $digits {
+        $n : $n * 10;
+    }
+    @return round($number * $n) / $n;
+}
+
+@function str-replace($string, $search, $replace: '') {
+    $index : str-index($string, $search);
+    @if ($index) {
+        @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace)
+    }
+    @return $string
+}

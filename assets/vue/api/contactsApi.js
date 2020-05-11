@@ -1,11 +1,10 @@
 import axios from "axios";
 
 export default {
-  create(entreprise) {
+  create(contact) {
     return axios.post("/api/contacts", {
-      "type":     entreprise.type,
-      "name":     entreprise.name,
-      "siret":    entreprise.siret
+      firstname:     contact.firstname,
+      lastname:     contact.lastname,
     }, {
       headers: {
         "accept":       "application/json",
@@ -20,6 +19,13 @@ export default {
       }
     });
   },
+  findEntreprise(id) {
+    return axios.get("/api/contacts/" + id + "/entreprises", {
+      headers: {
+        accept: "application/json",
+      }
+    });
+  },
   findOneById(id) {
     return axios.get("/api/contacts/" + id, {
       headers: {
@@ -27,11 +33,10 @@ export default {
       }
     })
   },
-  update(entreprise) {
-    return axios.patch("/api/contacts/" + entreprise.id, {
-      "type":     entreprise.type,
-      "name":     entreprise.name,
-      "siret":    entreprise.siret
+  update(contact) {
+    return axios.patch("/api/contacts/" + contact.id, {
+      firstname:     contact.firstname,
+      lastname:     contact.lastname,
     }, {
       headers: {
         "accept":       "application/json",

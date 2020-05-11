@@ -1,0 +1,445 @@
+//
+// Base styles
+//
+
+.card {
+    position         : relative;
+    display          : flex;
+    flex-direction   : column;
+    min-width        : 0; // See https://github.com/twbs/bootstrap/pull/22740#issuecomment-305868106
+    word-wrap        : break-word;
+    background-color : $card-bg;
+    background-clip  : border-box;
+    border           : $card-border-width solid $card-border-color;
+    @include border-radius($card-border-radius);
+    
+    > hr {
+        margin-right : 0;
+        margin-left  : 0;
+    }
+    
+    > .list-group:first-child {
+        .list-group-item:first-child {
+            @include border-top-radius($card-border-radius);
+        }
+    }
+    
+    > .list-group:last-child {
+        .list-group-item:last-child {
+            @include border-bottom-radius($card-border-radius);
+        }
+    }
+}
+
+.card-body {
+    // Enable `flex-grow: 1` for decks and groups so that card blocks take up
+    // as much space as possible, ensuring footers are aligned to the bottom.
+    flex    : 1 1 auto;
+    padding : $card-spacer-x;
+    color   : $card-color;
+}
+
+.card-title {
+    margin-bottom : $card-spacer-y;
+}
+
+.card-subtitle {
+    margin-top    : -$card-spacer-y / 2;
+    margin-bottom : 0;
+}
+
+.card-text:last-child {
+    margin-bottom : 0;
+}
+
+.card-link {
+    @include hover {
+        text-decoration : none;
+    }
+    
+    + .card-link {
+        margin-left : $card-spacer-x;
+    }
+}
+
+//
+// Optional textual caps
+//
+
+.card-header {
+    padding          : $card-spacer-y $card-spacer-x;
+    margin-bottom    : 0; // Removes the default margin-bottom of <hN>
+    color            : $card-cap-color;
+    background-color : $card-cap-bg;
+    border-bottom    : $card-border-width solid $card-border-color;
+    
+    &:first-child {
+        @include border-radius($card-inner-border-radius $card-inner-border-radius 0 0);
+    }
+    
+    + .list-group {
+        .list-group-item:first-child {
+            border-top : 0;
+        }
+    }
+}
+
+.card-footer {
+    padding          : $card-spacer-y $card-spacer-x;
+    background-color : $card-cap-bg;
+    border-top       : $card-border-width solid $card-border-color;
+    
+    &:last-child {
+        @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
+    }
+}
+
+
+//
+// Header navs
+//
+
+.card-header-tabs {
+    margin-right  : -$card-spacer-x / 2;
+    margin-bottom : -$card-spacer-y;
+    margin-left   : -$card-spacer-x / 2;
+    border-bottom : 0;
+}
+
+.card-header-pills {
+    margin-right : -$card-spacer-x / 2;
+    margin-left  : -$card-spacer-x / 2;
+}
+
+// Card image
+.card-img-overlay {
+    position : absolute;
+    top      : 0;
+    right    : 0;
+    bottom   : 0;
+    left     : 0;
+    padding  : $card-img-overlay-padding;
+}
+
+.card-img {
+    width : 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+    @include border-radius($card-inner-border-radius);
+}
+
+// Card image caps
+.card-img-top {
+    width : 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+    @include border-top-radius($card-inner-border-radius);
+}
+
+.card-img-bottom {
+    width : 100%; // Required because we use flexbox and this inherently applies align-self: stretch
+    @include border-bottom-radius($card-inner-border-radius);
+}
+
+
+// Card deck
+
+.card-deck {
+    display        : flex;
+    flex-direction : column;
+    
+    .card {
+        margin-bottom : $card-deck-margin;
+    }
+    
+    @include media-breakpoint-up(sm) {
+        flex-flow    : row wrap;
+        margin-right : -$card-deck-margin;
+        margin-left  : -$card-deck-margin;
+        
+        .card {
+            display        : flex;
+            // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+            flex           : 1 0 0%;
+            flex-direction : column;
+            margin-right   : $card-deck-margin;
+            margin-bottom  : 0; // Override the default
+            margin-left    : $card-deck-margin;
+        }
+    }
+}
+
+
+//
+// Card groups
+//
+
+.card-group {
+    display        : flex;
+    flex-direction : column;
+    
+    // The child selector allows nested `.card` within `.card-group`
+    // to display properly.
+    > .card {
+        margin-bottom : $card-group-margin;
+    }
+    
+    @include media-breakpoint-up(sm) {
+        flex-flow : row wrap;
+        // The child selector allows nested `.card` within `.card-group`
+        // to display properly.
+        > .card {
+            // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
+            flex          : 1 0 0%;
+            margin-bottom : 0;
+            
+            + .card {
+                margin-left : 0;
+                border-left : 0;
+            }
+            
+            // Handle rounded corners
+            @if $enable-rounded {
+                &:not(:last-child) {
+                    @include border-right-radius(0);
+                    
+                    .card-img-top,
+                    .card-header {
+                        // stylelint-disable-next-line property-blacklist
+                        border-top-right-radius : 0;
+                    }
+                    
+                    .card-img-bottom,
+                    .card-footer {
+                        // stylelint-disable-next-line property-blacklist
+                        border-bottom-right-radius : 0;
+                    }
+                }
+                
+                &:not(:first-child) {
+                    @include border-left-radius(0);
+                    
+                    .card-img-top,
+                    .card-header {
+                        // stylelint-disable-next-line property-blacklist
+                        border-top-left-radius : 0;
+                    }
+                    
+                    .card-img-bottom,
+                    .card-footer {
+                        // stylelint-disable-next-line property-blacklist
+                        border-bottom-left-radius : 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+//
+// Columns
+//
+
+.card-columns {
+    .card {
+        margin-bottom : $card-columns-margin;
+    }
+    
+    @include media-breakpoint-up(sm) {
+        column-count : $card-columns-count;
+        column-gap   : $card-columns-gap;
+        orphans      : 1;
+        widows       : 1;
+        
+        .card {
+            display : inline-block; // Don't let them vertically span multiple columns
+            width   : 100%; // Don't let their width change
+        }
+    }
+}
+
+
+//
+// Accordion
+//
+
+.accordion {
+    > .card {
+        overflow : hidden;
+        
+        &:not(:first-of-type) {
+            .card-header:first-child {
+                @include border-radius(0);
+            }
+            
+            &:not(:last-of-type) {
+                border-bottom : 0;
+                @include border-radius(0);
+            }
+        }
+        
+        &:first-of-type {
+            border-bottom : 0;
+            @include border-bottom-radius(0);
+        }
+        
+        &:last-of-type {
+            @include border-top-radius(0);
+        }
+        
+        .card-header {
+            margin-bottom : -$card-border-width;
+        }
+    }
+}
+
+
+/* Cards */
+
+.card {
+    border             : 1px solid $card-border-color;
+    box-shadow         : $card-box-shadow;
+    -webkit-box-shadow : $card-box-shadow;
+    -moz-box-shadow    : $card-box-shadow;
+    -ms-box-shadow     : $card-box-shadow;
+    
+    .card-body {
+        padding : $card-padding-y $card-padding-x;
+        
+        + .card-body {
+            padding-top : 1rem;
+        }
+    }
+    
+    .card-title {
+        color          : color(orange);
+        margin-bottom  : .5rem;
+        text-transform : capitalize;
+        font-size      : 1.125rem;
+    }
+    
+    .card-subtitle {
+        @extend .text-gray;
+        font-weight   : 400;
+        margin-top    : 0.625rem;
+        margin-bottom : 0.625rem;
+        
+    }
+    
+    .card-link {
+        padding-left  : .5rem;
+        padding-right : .5rem;
+        
+        &-primary {
+            color : color(blue-light);
+            
+            &:hover, &:active, &:visited {
+                color : color(blue-default);
+            }
+        }
+        
+        &-danger {
+            color : color(light-orange);
+            
+            &:hover, &:active, &:visited {
+                color : color(dark-orange);
+            }
+        }
+    }
+    
+    .card-input {
+        display          : block;
+        width            : 100%;
+        height           : calc(1em + 0.5rem + 2px);
+        padding          : 0.25rem 0.5rem;
+        font-size        : 1rem;
+        font-weight      : 400;
+        line-height      : 1;
+        color            : color(gray-light);
+        background-color : lighten($card-bg, 10%);
+        background-clip  : padding-box;
+        border           : 1px solid color(gray);
+        border-radius    : 0.25rem;
+        transition       : border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    
+    .card-description {
+        margin-bottom : .875rem;
+        font-weight   : 400;
+        color         : $card-description-color;
+    }
+    
+    .card-list {
+        padding-top    : .875rem;
+        padding-bottom : .875rem;
+        
+        &-header {
+            margin-top    : .875rem;
+            margin-bottom : .875rem;
+            border-bottom : 1px solid color(gray);
+        }
+        
+        &-items {
+            padding-top    : .5rem;
+            padding-bottom : .5rem;
+        }
+    }
+    
+    &.card-outline-success {
+        border : 1px solid theme-color("success");
+    }
+    
+    &.card-outline-primary {
+        border : 1px solid theme-color("primary");
+    }
+    
+    &.card-outline-warning {
+        border : 1px solid theme-color("warning");
+    }
+    
+    &.card-outline-danger {
+        border : 1px solid theme-color("danger");
+    }
+    
+    &.card-rounded {
+        @include border-radius(5px);
+    }
+    
+    &.card-faded {
+        background   : #b5b0b2;
+        border-color : #b5b0b2;
+    }
+    
+    &.card-circle-progress {
+        color      : $white;
+        text-align : center;
+    }
+    
+    &.card-img-holder {
+        position : relative;
+        
+        .card-img-absolute {
+            position : absolute;
+            top      : 0;
+            right    : 0;
+            height   : 100%;
+        }
+    }
+    
+    &.card-weather {
+        .weather-daily {
+            .weather-day {
+                opacity     : .5;
+                font-weight : 900;
+            }
+            
+            i {
+                font-size : 20px;
+            }
+            
+            .weather-temp {
+                margin-top    : .5rem;
+                margin-bottom : 0;
+                opacity       : .5;
+                font-size     : .75rem;
+            }
+        }
+    }
+}

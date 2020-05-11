@@ -6,7 +6,7 @@
           <div class="col-sm-12 pr-0">
             <div class="d-lg-flex">
               <h3 class="text-light font-weight-bold mb-0 mr-5">
-                List of all Technologies
+                List of all Contacts
               </h3>
             </div>
           </div>
@@ -16,7 +16,7 @@
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">
-                  {{ technos.length }} Technos enregistrées
+                  {{ contacts.length }} Contacts enregistrés
                 </h4>
 
                 <div
@@ -39,10 +39,10 @@
                 </div>
 
                 <div
-                  v-else-if="!hasTechnos"
+                  v-else-if="!hasContacts"
                   class="row col"
                 >
-                  No technologies found!
+                  No contacts found!
                 </div>
                 <div
                   v-else
@@ -50,23 +50,23 @@
                 >
                   <div class="form-row card-list-header">
                     <div class="col-3">
-                      <label for="name">Name</label>
+                      <label for="name">Prénom</label>
                     </div>
                     <div class="col-3">
-                      <label for="tjmRegion">Tjm Region</label>
+                      <label for="tjmRegion">Nom</label>
                     </div>
                     <div class="col-3">
-                      <label for="tjmRegion">Tjm France</label>
+                      <label for="tjmRegion">Entreprise</label>
                     </div>
                   </div>
                 </div>
                 <div
-                  v-for="(tech, index) in technos"
-                  :key="tech.id"
+                  v-for="(cont, index) in contacts"
+                  :key="cont.id"
                   class="card-list-items"
                 >
-                  <techno-component
-                    :techno="tech"
+                  <contact-component
+                    :contact="cont"
                     :index="index"
                   />
                 </div>
@@ -80,51 +80,51 @@
 </template>
 
 <script>
-import TechnoComponent from "../components/TechnoComponent";
+import ContactComponent from "../components/ContactsComponent";
 
 export default {
-  name:      "Technos",
+  name:      "Contacts",
   components: {
-    TechnoComponent
+    ContactComponent
   },
   data() {
     return {
-      technos: "",
-      techno: {
-        name: "",
-        tjmRegion: "",
-        tjmFrance: ""
+      contacts: "",
+      contact: {
+        firstname: "",
+        lastname: "",
+        entreprise: ""
       }
     };
   },
   computed:  {
     isLoading() {
-      return this.$store.getters["tech/isLoading"];
+      return this.$store.getters["contact/isLoading"];
     },
     hasError() {
-      return this.$store.getters["tech/hasError"];
+      return this.$store.getters["contact/hasError"];
     },
     error() {
-      return this.$store.getters["tech/error"];
+      return this.$store.getters["contact/error"];
     },
-    hasTechnos() {
-      return this.$store.getters["tech/hasTechnos"];
+    hasContacts() {
+      return this.$store.getters["contact/hasContacts"];
     },
-    getTechnos() {
-      return this.$store.getters["tech/technos"];
+    getContacts() {
+      return this.$store.getters["contact/contacts"];
     }
   },
   beforeMount() {
     this.hydrate();
   },
   methods:   {
-    async createTechno() {
-      await this.$store.dispatch("tech/create", this.$data.techno)
+    async createContact() {
+      await this.$store.dispatch("contact/create", this.$data.contact)
         .then(() => {
-          this.$data.techno = {
-            name:      "",
-            tjmRegion: "",
-            tjmFrance: ""
+          this.$data.contact = {
+            firstname: "",
+            lastname: "",
+            entreprise: ""
           };
         }
         )
@@ -133,9 +133,9 @@ export default {
         });
     },
     async hydrate() {
-      await this.$store.dispatch("tech/findAll")
+      await this.$store.dispatch("contact/findAll")
         .then(data => {
-          this.$data.technos = data;
+          this.$data.contacts = data;
         })
         .catch(error => {
           console.log(error);

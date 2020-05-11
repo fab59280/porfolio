@@ -1,0 +1,33 @@
+$customColors : (
+        grey: (
+                darker: #121623,
+                dark: #16182a,
+                default: #263342,
+                lighter: #76848d,
+                shadow: #a8b6bf,
+                lightest: #F4F4FF,
+        ),
+        standards : (
+                white: #ffffff,
+                black: #000000
+        ),
+        blue : (
+                darker: #352d8d,
+                dark: #394072,
+                default: #4d99b9,
+                light: #58c4c6
+        ),
+        orange: (
+                dark: #f4661b,
+                default: lighten(#f4661b, 15%),
+                light: #ff6868
+        ),
+        alerts : (
+                success : #d4edda,
+                border-success : #c3e6cb,
+                font-success : #155724,
+                danger : #f8d7da,
+                border-danger: #f5c6cb,
+                font-danger : #721c24
+        )
+);

@@ -1,3 +1,20 @@
 @import "~bootstrap/scss/bootstrap";
+@import "resets";
+
 @import "~@fortawesome/fontawesome-free/css/all.css";
 @import "~@fortawesome/fontawesome-free/css/v4-shims.css";
+
+//@import "colors";
+@import "variables";
+
+@import "functions";
+@import "mixins";
+@import "utilities";
+@import "text";
+
+@import "navbar";
+@import "sidebar";
+@import "wrapper";
+
+@import "dashboard";
+@import "cards";

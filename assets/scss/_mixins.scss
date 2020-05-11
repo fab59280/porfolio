@@ -1,0 +1,47 @@
+//FONTS
+
+@mixin font-family($family: 'Roboto') {
+    font-family: $family, sans-serif;
+}
+
+// FLEX
+
+@mixin display-flex() {
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+}
+
+@mixin flex-direction($type) {
+    flex-direction: $type;
+    -ms-flex-direction: $type;
+    -webkit-flex-direction: $type;
+}
+
+@mixin flex-grow($value) {
+    flex-grow: $value;
+    -webkit-flex-group: $value;
+}
+
+
+@mixin align-items($align) {
+    align-items: $align;
+}
+
+@mixin justify-content($justify) {
+    justify-content: $justify;
+}
+
+// TRANSFORM
+@mixin rotate($rate) {
+    transform: rotate($rate);
+    -moz-transform: rotate($rate);
+    -webkit-transform: rotate($rate);
+    -o-transform: rotate($rate);
+}
+
+
+// TRANSITION
+@mixin transition-duration($duration, $focus: all, $type: ease-in-out) {
+    transtion: #{$focus} #{$duration}ms #{$type}
+}
