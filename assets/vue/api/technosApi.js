@@ -14,7 +14,6 @@ export default {
     });
   },
   update(techno) {
-    console.log(techno);
     return axios.put("/api/technologies/" + techno.id, {
       name: techno.name,
       tjmRegion: parseInt(techno.tjmRegion, 10),
@@ -22,7 +21,7 @@ export default {
     }, {
       headers: {
         "accept":       "application/ld+json",
-        "Content-Type": "application/merge-patch+json"
+        "Content-Type": "application/ld+json"
       }
     });
   },

@@ -40,7 +40,7 @@ export default {
     }, {
       headers: {
         "accept":       "application/ld+json",
-        "Content-Type": "application/merge-patch+json"
+        "Content-Type": "application/ld+json"
       }
     }
     )
