@@ -42,21 +42,21 @@ class Entreprises
     private $address;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Contacts", mappedBy="entreprises")
+     * @ORM\OneToMany(targetEntity="App\Entity\Contacts", mappedBy="entreprises", cascade={"persist", "remove"})
      * @Groups({"read"})
      * @ApiSubresource(maxDepth=1)
      */
     private $contacts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Dates", mappedBy="entreprise")
+     * @ORM\OneToMany(targetEntity="App\Entity\Dates", mappedBy="entreprise", cascade={"persist", "remove"})
      * @Groups({"read"})
      * @ApiSubresource(maxDepth=1)
      */
     private $dates;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Missions", mappedBy="entreprise")
+     * @ORM\OneToMany(targetEntity="App\Entity\Missions", mappedBy="entreprise", cascade={"persist", "remove"})
      * @Groups({"read"})
      * @ApiSubresource(maxDepth=1)
      */

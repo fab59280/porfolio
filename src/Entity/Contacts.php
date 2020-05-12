@@ -46,7 +46,7 @@ class Contacts
     private $entreprises;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Mails", mappedBy="contacts")
+     * @ORM\OneToMany(targetEntity="App\Entity\Mails", mappedBy="contacts", cascade={"persist", "remove"})
      * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
@@ -60,7 +60,7 @@ class Contacts
     private $telephones;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Dates", mappedBy="contact")
+     * @ORM\OneToMany(targetEntity="App\Entity\Dates", mappedBy="contact", cascade={"persist", "remove"})
      * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
