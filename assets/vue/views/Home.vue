@@ -38,7 +38,7 @@
               {{ technos.length }} Technos enregistrées
             </p>
             <div
-              v-for="(tech, index) in technos"
+              v-for="(tech, index) in getTechnos"
               :key="tech.id"
               class=""
             >
@@ -60,7 +60,7 @@
               {{ contacts.length }} Contacts enregistrés
             </p>
             <div
-              v-for="contact in contacts"
+              v-for="contact in getContacts"
               :key="contact.id"
               class=""
             >
@@ -90,6 +90,14 @@ export default {
       technos: "",
       contacts: "",
     };
+  },
+  computed:{
+    getTechnos() {
+      return this.$store.getters["tech/technos"];
+    },
+    getContacts() {
+      return this.$store.getters["contact/contacts"]
+    }
   },
   beforeMount() {
     this.hydrateTechnos();

@@ -102,3 +102,21 @@
 .link {
     cursor: pointer;
 }
+
+.stretch-title {
+    position: relative;
+    @include align-items(stretch);
+    @include justify-content(stretch);
+    
+    &,&-item {
+        @include display-flex;
+    }
+    
+    &-item-add {
+        position: absolute;
+        top: -1.75rem;
+        right:-1.5rem;
+        font-size: 1.75rem;
+    }
+    
+}

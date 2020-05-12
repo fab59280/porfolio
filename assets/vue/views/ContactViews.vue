@@ -15,113 +15,35 @@
     </div>
 
     <div class="row mt-3">
-      <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              Informations Personnelles
-            </h4>
-            <div class="text-light font-weight-bold ">
-              <span>{{ contact.firstname }}</span>
-              <span>{{ contact.lastname }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-6 col-xl-3 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              Entreprise
-            </h4>
-            <div class="text-light font-weight-bold">
-              <p>
-                <a :href="'/entreprise' + contact.entreprise.id">
-                  {{ contact.entreprise.name }} | {{ contact.entreprise.type }}
-                </a>
-              </p>
-              <p v-if="contact.entreprise.siret !== null">
-                {{ contact.entreprise.siret }}
-              </p>
-            </div>
-            <div class="text-light font-weight-bold">
-              <p>{{ contact.entreprise.address.address }}</p>
-              <p>{{ contact.entreprise.address.postcode }} {{ contact.entreprise.address.city }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              Emails
-            </h4>
-            <div
-              v-if="contact.mails.length > 0"
-              class="text-light font-weight-bold"
-            >
-              <p
-                v-for="mail in contact.mails"
-                :key="mail.id"
-              >
-                <a
-                  :href="'mailto:' + mail.email"
-                  :title="'Mailto ' + mail.email"
-                > {{ mail.email }}</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-sm-6 col-md-6 col-xl-4 grid-margin stretch-card">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              Téléphones
-            </h4>
-            <div
-              v-if="contact.telephones.length > 0"
-              class="text-light font-weight-bold"
-            >
-              <div
-                v-for="phone in contact.telephones"
-                :key="phone.id"
-                class="justify-content-between"
-              >
-                <span class="col-6">
-                  <a
-                    :href="'tel:' + phone.telephone"
-                    :title="'Téléphoner ' + phone.telephone"
-                  > {{ phone.telephone }}</a>
-                </span>
-                <span class="col-6"> {{ phone.type }}</span>
-              </div>
-            </div>
-            <div
-              v-else
-              class="text-light font-weight-bold"
-            >
-              -
-            </div>
-          </div>
-        </div>
-      </div>
+      <contact-component :contact="contact" />
+      <entreprise-component :contact="contact" />
+      <mails-component :contact="contact" />
+      <telephones-component :contact="contact" />
     </div>
   </div>
 </template>
 
 <script>
+import contactComponent from "../components/contact/ContactComponent";
+import entrepriseComponent from "../components/contact/EntrepriseComponent";
+import mailsComponent from "../components/contact/MailsComponent";
+import telephonesComponent from "../components/contact/TelephonesComponent";
 
 export default {
   name:     "ContactView",
+  components:{
+    contactComponent,
+    entrepriseComponent,
+    mailsComponent,
+    telephonesComponent
+  },
   data() {
     return {
       contact: {
         id: "",
         firstname:  "",
         lastname:   "",
+        role: "",
         dates:      {},
         entreprise: {
           id: "",
