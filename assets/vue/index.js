@@ -3,8 +3,7 @@ import App from "./App";
 import router from "./router";
 import store from "./store"
 
-/*router.beforeEach((to, from, next) => {
-  console.log(store.getters['login/user']);
+router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     console.log('route need authentication')
     if (window.user || store.getters['login/user']) {
@@ -20,7 +19,7 @@ import store from "./store"
   } else {
     next()
   }
-})*/
+})
 
 new Vue(
   {

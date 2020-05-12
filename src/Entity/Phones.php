@@ -12,7 +12,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PhonesRepository")
  * @ApiResource(attributes={"security"="is_granted('ROLE_ADMIN')",
- *     "normalization_context"={"groups"={"read"}}
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}},
  *     })
  */
 class Phones
@@ -27,13 +28,13 @@ class Phones
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $type;
 

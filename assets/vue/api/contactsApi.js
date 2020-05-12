@@ -7,40 +7,40 @@ export default {
       lastname:     contact.lastname,
     }, {
       headers: {
-        "accept":       "application/json",
-        "Content-Type": "application/json"
+        "accept":       "application/ld+json",
+        "Content-Type": "application/ld+json"
       }
     });
   },
   findAll() {
     return axios.get("/api/contacts", {
       headers: {
-        accept: "application/json",
+        accept: "application/ld+json",
       }
     });
   },
   findEntreprise(id) {
     return axios.get("/api/contacts/" + id + "/entreprises", {
       headers: {
-        accept: "application/json",
+        accept: "application/ld+json",
       }
     });
   },
   findOneById(id) {
     return axios.get("/api/contacts/" + id, {
       headers: {
-        accept: "application/json",
+        accept: "application/ld+json",
       }
     })
   },
   update(contact) {
-    return axios.patch("/api/contacts/" + contact.id, {
+    return axios.put("/api/contacts/" + contact.id, {
       firstname:     contact.firstname,
       lastname:     contact.lastname,
     }, {
       headers: {
-        "accept":       "application/json",
-        "Content-Type": "application/json"
+        "accept":       "application/ld+json",
+        "Content-Type": "application/merge-patch+json"
       }
     }
     )
@@ -49,7 +49,7 @@ export default {
     return axios.delete("/api/contacts/" + id,
       {
         headers: {
-          "accept":       "application/json"
+          "accept":       "application/ld+json"
         }
       }
     )

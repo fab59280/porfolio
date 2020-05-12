@@ -31,10 +31,10 @@ export default {
       return state.error;
     },
     hasTechnos(state) {
-      return state.technos.length > 0;
+      return state.technos['hydra:member'].length > 0;
     },
     technos(state) {
-      return state.technos;
+      return state.technos['hydra:member'];
     }
   },
   mutations:  {

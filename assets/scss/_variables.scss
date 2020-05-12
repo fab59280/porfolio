@@ -342,9 +342,9 @@ $breadcrumb-item-bg:                #555b71;
 
 ////////// MODALS VARIABLES //////////
 
-$modal-inner-padding:               15px;
-$modal-dialog-margin:               10px;
-$modal-dialog-margin-y-sm-up:       30px;
+$modal-inner-padding:               mq-px2rem(15px);
+$modal-dialog-margin:               mq-px2rem(10px);
+$modal-dialog-margin-y-sm-up:       mq-px2rem(30px);
 $modal-title-line-height:           $line-height-base;
 $modal-content-bg:                  #323748;
 $modal-content-box-shadow-xs:       0 3px 9px rgba($black,.5);

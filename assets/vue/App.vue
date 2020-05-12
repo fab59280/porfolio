@@ -155,7 +155,6 @@ export default {
     };
   },
   mounted() {
-    console.log(window)
     if (window.user) {
       this.user = window.user;
     }

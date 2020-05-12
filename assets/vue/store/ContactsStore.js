@@ -6,6 +6,9 @@ const CREATING_CONTACT      = "CREATING_CONTACT",
   FETCHING_CONTACTS         = "FETCHING_CONTACTS",
   FETCHING_CONTACTS_SUCCESS = "FETCHING_CONTACTS_SUCCESS",
   FETCHING_CONTACTS_ERROR   = "FETCHING_CONTACTS_ERROR",
+  FETCHING_ONE_CONTACT         = "FETCHING_ONE_CONTACT",
+  FETCHING_ONE_CONTACT_SUCCESS = "FETCHING_ONE_CONTACT_SUCCESS",
+  FETCHING_ONE_CONTACT_ERROR   = "FETCHING_ONE_CONTACT_ERROR",
   UPDATING_CONTACT          = "UPDATING_CONTACT",
   UPDATING_CONTACT_SUCCESS  = "UPDATING_CONTACT_SUCCESS",
   UPDATING_CONTACT_ERROR    = "UPDATING_CONTACT_ERROR",
@@ -18,7 +21,8 @@ export default {
   state:      {
     isLoading: false,
     error:     null,
-    contacts:   []
+    contacts:   [],
+    contact: null
   },
   getters:    {
     isLoading(state) {
@@ -31,10 +35,13 @@ export default {
       return state.error;
     },
     hasContacts(state) {
-      return state.contacts.length > 0;
+      return state.contacts['hydra:member'].length > 0;
     },
     contacts(state) {
-      return state.contacts;
+      return state.contacts['hydra:member'];
+    },
+    contact(state) {
+      return state.contact;
     }
   },
   mutations:  {
@@ -62,6 +69,21 @@ export default {
       state.contacts   = contacts;
     },
     [FETCHING_CONTACTS_ERROR](state, error) {
+      state.isLoading = false;
+      state.error     = error;
+      state.contacts   = [];
+    },
+    [FETCHING_ONE_CONTACT](state) {
+      state.isLoading = true;
+      state.error     = null;
+      state.contacts   = [];
+    },
+    [FETCHING_ONE_CONTACT_SUCCESS](state, contact) {
+      state.isLoading = false;
+      state.error     = null;
+      state.contact   = contact;
+    },
+    [FETCHING_ONE_CONTACT_ERROR](state, error) {
       state.isLoading = false;
       state.error     = error;
       state.contacts   = [];
@@ -110,7 +132,7 @@ export default {
       try {
         let response = await ContactsAPI.findAll();
 
-        for (let contact of response.data) {
+        for (let contact of response.data['hydra:member']) {
           let entreprise = await ContactsAPI.findEntreprise(contact.id);
           contact.entreprise = entreprise.data;
         }
@@ -119,6 +141,20 @@ export default {
         return response.data;
       } catch (error) {
         commit(FETCHING_CONTACTS_ERROR, error);
+        return null;
+      }
+    },
+    async findById({commit}, id) {
+      commit(FETCHING_ONE_CONTACT);
+      try {
+        let response = await ContactsAPI.findOneById(id);
+        let entreprise = await ContactsAPI.findEntreprise(id);
+        response.data.entreprise = entreprise.data;
+
+        commit(FETCHING_ONE_CONTACT_SUCCESS, response.data);
+        return response.data;
+      } catch (error) {
+        commit(FETCHING_ONE_CONTACT_ERROR, error);
         return null;
       }
     },

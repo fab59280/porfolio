@@ -31,13 +31,13 @@ export default {
       return state.error;
     },
     hasEntreprises(state) {
-      return state.entreprises.length > 0;
+      return state.entreprises['hydra:member'].length > 0;
     },
     hasEntreprise(state) {
       return state.entreprise !== "";
     },
     entreprises(state) {
-      return state.entreprises;
+      return state.entreprises['hydra:member'];
     },
     entreprise(state) {
       return state.entreprise;

@@ -8,20 +8,20 @@ export default {
       tjmFrance: parseInt(techno.tjmFrance, 10)
     }, {
       headers: {
-        "accept": "application/json",
-        "Content-Type": "application/json"
+        "accept": "application/ld+json",
+        "Content-Type": "application/ld+json"
       }
     });
   },
   update(techno) {
     console.log(techno);
-    return axios.patch("/api/technologies/" + techno.id, {
+    return axios.put("/api/technologies/" + techno.id, {
       name: techno.name,
       tjmRegion: parseInt(techno.tjmRegion, 10),
       tjmFrance: parseInt(techno.tjmFrance, 10)
     }, {
       headers: {
-        "accept":       "application/json",
+        "accept":       "application/ld+json",
         "Content-Type": "application/merge-patch+json"
       }
     });
@@ -35,7 +35,7 @@ export default {
   findAll() {
     return axios.get("/api/technologies", {
       headers: {
-        accept: "application/json",
+        accept: "application/ld+json",
       }
     });
   }

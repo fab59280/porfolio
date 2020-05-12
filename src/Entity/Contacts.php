@@ -13,7 +13,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass="App\Repository\ContactsRepository")
  * @ApiResource(attributes={
  *     "security"="is_granted('ROLE_ADMIN')",
- *     "normalization_context"={"groups"={"read"}}
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}},
  * })
  */
 class Contacts
@@ -34,7 +35,7 @@ class Contacts
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $firstname;
 
@@ -46,27 +47,28 @@ class Contacts
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Mails", mappedBy="contacts")
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
     private $mails;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Phones", mappedBy="contacts")
-     * @Groups({"read"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Phones", mappedBy="contacts", cascade={"persist", "remove"})
+     * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
     private $telephones;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Dates", mappedBy="contact")
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
     private $dates;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
      */
     private $role;
 

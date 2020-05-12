@@ -1,10 +1,57 @@
 <template>
   <div class="d-flex justify-content-between align-items-center">
-    <div class="text-light font-weight-bold">
-      {{ contact.firstname }}
+    <div class="text-light font-weight-bold col-3">
+      <span
+        v-show="editOffset !== index"
+        class="link"
+        @click="$router.push('/contact-' + contact.id)"
+      >{{ contact.firstname }}</span>
+      <input
+        v-show="editOffset===index"
+        :id="'item-contact-firstname-' + index"
+        v-model="contact.firstname"
+        type="text"
+        class="card-inputx"
+        @keydown.enter="updateContact"
+        @keydown.esc="cancelEditing"
+      >
     </div>
-    <div class="text-light font-weight-bold">
-      {{ contact.lastname }}
+    <div class="text-light font-weight-bold col-3">
+      <span
+        v-show="editOffset !== index"
+        class="link"
+        @click="$router.push('/contact-' + contact.id)"
+      >{{ contact.lastname }}</span>
+      <input
+        v-show="editOffset===index"
+        :id="'item-contact-lastname-' + index"
+        v-model="contact.lastname"
+        type="text"
+        class="card-inputx"
+        @keydown.enter="updateContact"
+        @keydown.esc="cancelEditing"
+      >
+    </div>
+    <div class="text-light font-weight-bold col-3">
+      {{ contact.entreprise.name }}
+    </div>
+    <div class="col-3">
+      <a
+        href="#"
+        class="card-link card-link-primary"
+        :title="'Edit ' + contact.firstname + contact.lastname"
+        @click.prevent="startEditing(contact, index)"
+      >
+        <i class="fa fa-edit" />
+      </a>
+      <a
+        href="#"
+        class="card-link card-link-danger"
+        :title="'Delete ' + contact.firstname + contact.lastname "
+        @click.prevent="deleteEditing(contact, index)"
+      >
+        <i class="fa fa-times" />
+      </a>
     </div>
   </div>
 </template>
@@ -32,8 +79,8 @@ export default {
   computed: {
   },
   methods: {
-    async updateTechno() {
-      await this.$store.dispatch("tech/update", {contact: this.$data.editPost, index: this.$data.editOffset })
+    async updateContact() {
+      await this.$store.dispatch("contact/update", {contact: this.$data.editPost, index: this.$data.editOffset })
         .then(data => {
           this.$data.contacts = data;
 
@@ -45,8 +92,8 @@ export default {
           console.log(error);
         });
     },
-    async deleteTechno(contact, index) {
-      await this.$store.dispatch("tech/delete", {contact: contact, index: index })
+    async deleteContact(contact, index) {
+      await this.$store.dispatch("contact/delete", {contact: contact, index: index })
         .catch(error => {
           console.log(error);
         });
@@ -57,8 +104,8 @@ export default {
       this.$data.editPostOri = JSON.parse(JSON.stringify(this.$data.editPost))
       // set focus ke element input
       this.$nextTick(function () {
-        console.log('item-contact-name-' + this.$data.editOffset)
-        document.getElementById('item-contact-name-' + this.$data.editOffset).focus()
+        console.log('item-contact-firstname-' + this.$data.editOffset)
+        document.getElementById('item-contact-firstname-' + this.$data.editOffset).focus()
       }.bind(this))
     },
     cancelEditing() {
@@ -69,7 +116,7 @@ export default {
     },
     deleteEditing(contact, index) {
       if (confirm("Are you sure you want to delete this entry ? " + contact.name)) {
-        this.deleteTechno(contact, index);
+        this.deleteContact(contact, index);
       }
     }
   }

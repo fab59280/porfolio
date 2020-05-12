@@ -61,7 +61,7 @@
                   </div>
                 </div>
                 <div
-                  v-for="(tech, index) in technos"
+                  v-for="(tech, index) in getTechnos"
                   :key="tech.id"
                   class="card-list-items"
                 >

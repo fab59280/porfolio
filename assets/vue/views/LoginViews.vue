@@ -94,7 +94,7 @@ export default {
               this.$parent.user = user;
               console.log(this.$store.getters['login/user']);
             })
-          this.$router.push(this.$route.query.redirect || '/')
+          window.location.pathname = this.$route.query.redirect || '/';
         })
         .catch(error => {
           console.log(error);

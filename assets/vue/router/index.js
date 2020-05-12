@@ -5,6 +5,7 @@ import Tech from "../views/TechnosViews";
 import Entreprises from "../views/EntreprisesViews";
 import Entreprise from "../views/EntrepriseViews";
 import Contacts from "../views/ContactsViews";
+import Contact from "../views/ContactViews";
 import Login from "../views/LoginViews";
 
 Vue.use(VueRouter);
@@ -18,6 +19,7 @@ export default new VueRouter({
     { path: "/entreprises", component: Entreprises, meta: { requiresAuth: true }  },
     { path: "/contacts", component: Contacts, meta: { requiresAuth: true }  },
     { path: "/entreprise-:id", component: Entreprise, meta: { requiresAuth: true }  },
+    { path: "/contact-:id", component: Contact, meta: { requiresAuth: true }  },
     //{ path: "/:path((^admin|api))", redirect: "/" }
   ],
   isAuthenticated: false

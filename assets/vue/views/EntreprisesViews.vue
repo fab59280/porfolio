@@ -3,63 +3,6 @@
     <div class="row col">
       <h1>Entreprises</h1>
     </div>
-    <!--
-    <div class="row col list-group">
-      <fieldset
-        title="Add a new Technology"
-        class="list-group-item list-group-item-warning"
-      >
-        <form>
-          <div class="form-row">
-            <div class="col-12 col-lg-3">
-              <label for="name">Name</label>
-            </div>
-            <div class="col-12 col-lg-3">
-              <label for="tjmRegion">Type</label>
-            </div>
-            <div class="col-12 col-lg-3">
-              <label for="tjmFrance">N° Siret</label>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="col-12 col-lg-3">
-              <input
-                v-model="entreprises.name"
-                type="text"
-                class="form-control"
-                name="name"
-              >
-            </div>
-            <div class="col-12 col-lg-3">
-              <input
-                v-model="entreprises.type"
-                type="text"
-                class="form-control"
-                name="tjmRegion"
-              >
-            </div>
-            <div class="col-12 col-lg-3">
-              <input
-                v-model="entreprises.siret"
-                type="text"
-                class="form-control"
-                name="tjmFrance"
-              >
-            </div>
-            <div class="col-12 col-lg-3">
-              <button
-                type="button"
-                class="btn btn-primary form-control"
-                @click="createPost()"
-              >
-                Create
-              </button>
-            </div>
-          </div>
-        </form>
-      </fieldset>
-    </div>-->
-
     <div
       v-if="isLoading"
       class="row col"
@@ -110,47 +53,12 @@
         </div>
       </li>
       <li
-        v-for="(entreprise, index) in entreprises"
+        v-for="(entreprise, index) in getEntreprises"
         :key="entreprise.id"
         :class="{'list-group-item list-group-item-info': index % 2 === 0, 'list-group-item list-group-item-primary': index % 2
           !==
           0 }"
       >
-        <!--<div class="row col">
-          <div class="col-12 col-lg-3">
-            {{ entreprise.name }}
-          </div>
-          <div
-            v-if="entreprise.type !== ''"
-            class="col-12 col-lg-3"
-          >
-            {{ entreprise.type }}
-          </div>
-          <div
-            v-else
-            class="col-12 col-lg-3"
-          >
-            -
-          </div>
-          <div
-            v-if="entreprise.siret !== ''"
-            class="col-12 col-lg-3"
-          >
-            {{ entreprise.siret }}
-          </div>
-          <div
-            v-else
-            class="col-12 col-lg-3"
-          >
-            -
-          </div>
-          <div class="col-12 col-lg-3">
-            <a
-              :href="'/vue/entreprise-' + entreprise.id"
-              :title="'Voir l\'entreprise' + entreprise.name"
-            >Détails </a>
-          </div>
-        </div>-->
         <entreprises-component :entreprise="entreprise" />
       </li>
     </ul>

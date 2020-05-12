@@ -7,15 +7,15 @@ export default {
       password:     data.password
     }, {
       headers: {
-        "accept":       "application/json",
-        "Content-Type": "application/json"
+        "accept":       "application/ld+json",
+        "Content-Type": "application/ld+json"
       }
     });
   },
   find(iri) {
     return axios.get(iri, {
       headers: {
-        "accept": "application/json"
+        "accept": "application/ld+json"
       }
     });
   }

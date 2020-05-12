@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass="App\Repository\MailsRepository")
  * @ApiResource(attributes={"security"="is_granted('ROLE_ADMIN')",
  *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}},
  *     })
  */
 class Mails
@@ -33,7 +34,7 @@ class Mails
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $email;
 

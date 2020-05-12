@@ -61,7 +61,7 @@
                   </div>
                 </div>
                 <div
-                  v-for="(cont, index) in contacts"
+                  v-for="(cont, index) in getContacts"
                   :key="cont.id"
                   class="card-list-items"
                 >
