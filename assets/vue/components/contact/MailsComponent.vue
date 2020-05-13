@@ -127,6 +127,9 @@ export default {
     },
     display() {
       this.$data.add = true;
+      this.$nextTick(function () {
+        document.getElementById('item-email-add-email').focus()
+      }.bind(this))
     },
     startEditing(mail, index) {
       this.$data.editOffset  = index
@@ -138,14 +141,12 @@ export default {
       }.bind(this))
     },
     cancelAdding() {
-      this.$set(this.add, this.email)
       this.$data.add = false;
       this.$data.mail = {
         email:""
       };
     },
     cancelEditing() {
-      this.$set(this.email, this.editOffset, this.editPostOri)
       this.$data.editOffset = -1
       this.$data.editPostOri = {}
       this.$data.editPost = {}

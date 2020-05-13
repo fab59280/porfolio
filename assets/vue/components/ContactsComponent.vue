@@ -11,7 +11,7 @@
         :id="'item-contact-firstname-' + index"
         v-model="contact.firstname"
         type="text"
-        class="card-inputx"
+        class="card-input"
         @keydown.enter="updateContact"
         @keydown.esc="cancelEditing"
       >
@@ -27,7 +27,7 @@
         :id="'item-contact-lastname-' + index"
         v-model="contact.lastname"
         type="text"
-        class="card-inputx"
+        class="card-input"
         @keydown.enter="updateContact"
         @keydown.esc="cancelEditing"
       >
@@ -75,8 +75,6 @@ export default {
       editPost : {},
       editPostOri: {},
     }
-  },
-  computed: {
   },
   methods: {
     async updateContact() {

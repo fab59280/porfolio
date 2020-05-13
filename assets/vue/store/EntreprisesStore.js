@@ -8,7 +8,10 @@ const CREATING_ENTREPRISE      = "CREATING_ENTREPRISE",
   FETCHING_ENTREPRISES_SUCCESS = "FETCHING_ENTREPRISES_SUCCESS",
   FETCHING_CONTACTS_SUCCESS    = "FETCHING_CONTACTS_SUCCESS",
   FETCHING_ENTREPRISE_SUCCESS  = "FETCHING_ENTREPRISE_SUCCESS",
-  FETCHING_ENTREPRISES_ERROR   = "FETCHING_ENTREPRISES_ERROR";
+  FETCHING_ENTREPRISES_ERROR   = "FETCHING_ENTREPRISES_ERROR",
+  UPDATING_ENTREPRISE          = "UPDATING_ENTREPRISE",
+  UPDATING_ENTREPRISE_SUCCESS  = "UPDATING_ENTREPRISE_SUCCESS",
+  UPDATING_ENTREPRISE_ERROR    = "UPDATING_ENTREPRISE_ERROR";
 
 
 export default {
@@ -60,6 +63,20 @@ export default {
       state.isLoading = false;
       state.error     = error;
       state.entreprises   = [];
+    },
+    [UPDATING_ENTREPRISE](state) {
+      state.isLoading = true;
+      state.error     = null;
+    },
+    [UPDATING_ENTREPRISE_SUCCESS](state, entreprise) {
+      state.isLoading = false;
+      state.error     = null;
+      state.entreprise = entreprise;
+    },
+    [UPDATING_ENTREPRISE_ERROR](state, error) {
+      state.isLoading = false;
+      state.error     = error;
+      state.entreprise   = "";
     },
     [FETCHING_ENTREPRISES](state) {
       state.isLoading = true;
@@ -139,5 +156,16 @@ export default {
         return null;
       }
     },
+    async update({commit}, data) {
+      commit(UPDATING_ENTREPRISE);
+      try {
+        let response = await EntrepriseAPI.update(data);
+        commit(UPDATING_ENTREPRISE_SUCCESS, response.data);
+        return response.data;
+      } catch (error) {
+        commit(UPDATING_ENTREPRISE_ERROR, error);
+        return null;
+      }
+    }
   }
 };

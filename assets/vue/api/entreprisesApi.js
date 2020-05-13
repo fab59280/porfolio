@@ -28,11 +28,7 @@ export default {
     return data;
   },
   update(entreprise) {
-    return axios.put("/api/entreprises/" + entreprise.id, {
-      "type":     entreprise.type,
-      "name":     entreprise.name,
-      "siret":    entreprise.siret
-    }, {
+    return axios.put(entreprise['@id'], JSON.parse(JSON.stringify(entreprise)), {
       headers: {
         "accept":       "application/ld+json",
         "Content-Type": "application/ld+json"

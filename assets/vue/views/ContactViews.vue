@@ -19,6 +19,7 @@
       <entreprise-component :contact="contact" />
       <mails-component :contact="contact" />
       <telephones-component :contact="contact" />
+      <dates-component :contact="contact" />
     </div>
   </div>
 </template>
@@ -28,6 +29,7 @@ import contactComponent from "../components/contact/ContactComponent";
 import entrepriseComponent from "../components/contact/EntrepriseComponent";
 import mailsComponent from "../components/contact/MailsComponent";
 import telephonesComponent from "../components/contact/TelephonesComponent";
+import datesComponent from "../components/contact/DatesComponent";
 
 export default {
   name:     "ContactView",
@@ -35,7 +37,8 @@ export default {
     contactComponent,
     entrepriseComponent,
     mailsComponent,
-    telephonesComponent
+    telephonesComponent,
+    datesComponent,
   },
   data() {
     return {

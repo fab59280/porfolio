@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource( attributes={
  *     "security"="is_granted('ROLE_ADMIN')",
  *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}},
  *     "order"={"name"="ASC"}
  *     }
  *     )
@@ -43,7 +44,7 @@ class Entreprises
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Contacts", mappedBy="entreprises", cascade={"persist", "remove"})
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
     private $contacts;

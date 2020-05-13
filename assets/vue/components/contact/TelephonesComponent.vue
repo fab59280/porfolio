@@ -156,6 +156,9 @@ export default {
     },
     display() {
       this.$data.add = true;
+      this.$nextTick(function () {
+        document.getElementById('item-telephone-add-telephone').focus()
+      }.bind(this))
     },
     startEditing(phone, index) {
       this.$data.editOffset  = index
@@ -167,7 +170,7 @@ export default {
       }.bind(this))
     },
     cancelAdding() {
-      this.$set(this.add, this.telephone)
+      //this.$set(this.add, this.telephone)
       this.$data.add = false;
       this.$data.telephone = {
         telephone:"",
@@ -175,7 +178,6 @@ export default {
       };
     },
     cancelEditing() {
-      this.$set(this.telephone, this.editOffset, this.editPostOri)
       this.$data.editOffset = -1
       this.$data.editPostOri = {}
       this.$data.editPost = {}
