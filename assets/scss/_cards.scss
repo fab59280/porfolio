@@ -58,7 +58,7 @@
     }
     
     + .card-link {
-        margin-left : $card-spacer-x;
+        margin-left : $card-spacer-x / 4;
     }
 }
 
@@ -324,8 +324,8 @@
     }
     
     .card-link {
-        padding-left  : .5rem;
-        padding-right : .5rem;
+        padding-left  : .25rem;
+        padding-right : .25rem;
         
         &-primary {
             color : color(blue-light);
@@ -358,6 +358,10 @@
         border           : 1px solid color(gray);
         border-radius    : 0.25rem;
         transition       : border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        
+        &-title {
+            width: 100%;
+        }
     }
     
     .card-description {

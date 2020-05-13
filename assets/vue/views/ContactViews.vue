@@ -102,48 +102,8 @@ export default {
           this.$data.contact = data;
         })
     },
-    async updateContact() {
-      await this.$store.dispatch("contact/update", {contact: this.$data.editPost, index: this.$data.editOffset })
-        .then(data => {
-          this.$data.contacts = data;
-
-          this.$data.editOffset = -1
-          this.$data.editPostOri = {}
-          this.$data.editPost = {}
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    async deleteContact(contact, index) {
-      await this.$store.dispatch("contact/delete", {contact: contact, index: index })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    startEditing(contact, index) {
-      this.$data.editOffset  = index
-      this.$data.editPost    = contact
-      this.$data.editPostOri = JSON.parse(JSON.stringify(this.$data.editPost))
-      // set focus ke element input
-      this.$nextTick(function () {
-        console.log('item-contact-firstname-' + this.$data.editOffset)
-        document.getElementById('item-contact-firstname-' + this.$data.editOffset).focus()
-      }.bind(this))
-    },
-    cancelEditing() {
-      this.$set(this.contact, this.editOffset, this.editPostOri)
-      this.$data.editOffset = -1
-      this.$data.editPostOri = {}
-      this.$data.editPost = {}
-    },
-    deleteEditing(contact, index) {
-      if (confirm("Are you sure you want to delete this entry ? " + contact.name)) {
-        this.deleteContact(contact, index);
-      }
-    },
-    async addPhone(phone) {
-      console.log(phone);
+    async saveContact() {
+      await this.$store.dispatch('contact/update', this.contact);
     }
   }
 };

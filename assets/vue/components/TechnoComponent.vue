@@ -11,7 +11,7 @@
         :id="'item-techno-name-' + index"
         v-model="techno.name"
         type="text"
-        class="card-inputx"
+        class="card-input"
         @keydown.enter="updateTechno"
         @keydown.esc="cancelEditing"
       >
@@ -25,7 +25,7 @@
         :id="'item-techno-tjmRegion-' + index"
         v-model="techno.tjmRegion"
         type="text"
-        class="card-inputx"
+        class="card-input"
         @keydown.enter="updateTechno"
         @keydown.esc="cancelEditing"
       >

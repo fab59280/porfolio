@@ -7,7 +7,7 @@
         </h4>
         <div class="text-light font-weight-bold">
           <p>
-            <a :href="'/entreprise' + contact.entreprise.id">
+            <a :href="'/entreprise-' + contact.entreprise.id">
               {{ contact.entreprise.name }} | {{ contact.entreprise.type }}
             </a>
           </p>

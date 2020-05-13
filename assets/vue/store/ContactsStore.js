@@ -92,10 +92,11 @@ export default {
       state.isLoading = true;
       state.error     = null;
     },
-    [UPDATING_CONTACT_SUCCESS](state, contact, index) {
+    [UPDATING_CONTACT_SUCCESS](state, contact) {
       state.isLoading = false;
       state.error     = null;
-      state.contacts[index] = contact;
+      state.contacts.push(contact);
+      state.contact = contact;
     },
     [UPDATING_CONTACT_ERROR](state, error) {
       state.isLoading = false;
@@ -161,10 +162,13 @@ export default {
     async update({commit}, data) {
       commit(UPDATING_CONTACT);
       try {
-        let response = await ContactsAPI.update(data.contact);
-        commit(UPDATING_CONTACT_SUCCESS, response.data, data.index);
+        let response = await ContactsAPI.update(data);
+        console.log(response.data);
+        commit(UPDATING_CONTACT_SUCCESS, response.data);
         return response.data;
       } catch (error) {
+        console.log(data);
+        console.log(error);
         commit(UPDATING_CONTACT_ERROR, error);
       }
     },

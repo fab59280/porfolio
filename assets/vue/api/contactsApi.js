@@ -2,10 +2,7 @@ import axios from "axios";
 
 export default {
   create(contact) {
-    return axios.post("/api/contacts", {
-      firstname:     contact.firstname,
-      lastname:     contact.lastname,
-    }, {
+    return axios.post("/api/contacts", JSON.parse(JSON.stringify(contact)), {
       headers: {
         "accept":       "application/ld+json",
         "Content-Type": "application/ld+json"
@@ -34,10 +31,7 @@ export default {
     })
   },
   update(contact) {
-    return axios.put("/api/contacts/" + contact.id, {
-      firstname:     contact.firstname,
-      lastname:     contact.lastname,
-    }, {
+    return axios.put("/api/contacts/" + contact.id, JSON.parse(JSON.stringify(contact)), {
       headers: {
         "accept":       "application/ld+json",
         "Content-Type": "application/ld+json"

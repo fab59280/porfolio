@@ -50,6 +50,12 @@ class Dates
      */
     private $contact;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read","write"})
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->entreprise = new ArrayCollection();
@@ -104,6 +110,18 @@ class Dates
     public function setContact(?Contacts $contact): self
     {
         $this->contact = $contact;
+
+        return $this;
+    }
+
+    public function getNotes(): ?string
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(?string $notes): self
+    {
+        $this->notes = $notes;
 
         return $this;
     }
