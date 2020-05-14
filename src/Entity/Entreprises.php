@@ -31,13 +31,13 @@ class Entreprises
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $type;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Addresses", cascade={"persist", "remove"})
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
     private $address;
@@ -51,27 +51,27 @@ class Entreprises
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Dates", mappedBy="entreprise", cascade={"persist", "remove"})
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
     private $dates;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Missions", mappedBy="entreprise", cascade={"persist", "remove"})
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
      */
     private $missions;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read","write"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $siret;
 

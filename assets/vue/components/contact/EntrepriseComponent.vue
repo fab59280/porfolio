@@ -33,6 +33,7 @@
           </p>
         </div>
         <div
+          v-if="contact.entreprise.address !== undefined"
           v-show="edit === false"
           class="text-light font-weight-bold"
         >

@@ -10,9 +10,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DatesRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @ApiResource(attributes={
  *     "security"="is_granted('ROLE_ADMIN')",
- *     "normalization_context"={"groups"={"read"}}
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}},
  *     })
  */
 class Dates
@@ -27,13 +29,13 @@ class Dates
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $date;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $type;
 
@@ -56,10 +58,6 @@ class Dates
      */
     private $notes;
 
-    public function __construct()
-    {
-        $this->entreprise = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -124,6 +122,16 @@ class Dates
         $this->notes = $notes;
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if($this->date === null) {
+            $this->date = new \DateTime();
+        }
     }
 
 }

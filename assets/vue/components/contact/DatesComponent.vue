@@ -274,6 +274,12 @@ export default {
     async saveContact() {
       await this.$store.dispatch('contact/update', this.contact)
         .then(() => {
+          this.$store.dispatch('entreprise/update', {
+            '@id': this.contact.entreprise['@id'],
+            dates: this.contact.dates
+          })
+        })
+        .then(() => {
           this.add = false;
           this.edit = false;
           this.show = false;
