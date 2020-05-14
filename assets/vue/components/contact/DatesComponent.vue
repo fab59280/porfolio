@@ -14,78 +14,78 @@
           </div>
         </h4>
         <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <div class="card-input-title justify-content-between">
+            Date
+          </div>
+        </div>
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <input
+            v-show="add===true"
+            :id="'item-date-add-date'"
+            v-model="rdv.date"
+            type="text"
+            class="card-input justify-content-between"
+            @keydown.enter="addDate"
+            @keydown.esc="cancelAdding"
+          >
+        </div>
+
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <div class="card-input-title justify-content-between">
+            Type
+          </div>
+        </div>
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <input
+            v-show="add===true"
+            :id="'item-date-add-type'"
+            v-model="rdv.type"
+            type="text"
+            class="card-input justify-content-between"
+            @keydown.enter="addDate"
+            @keydown.esc="cancelAdding"
+          >
+        </div>
+
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <div class="card-input-title justify-content-between">
+            Notes
+          </div>
+        </div>
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <textarea
+            v-show="add===true"
+            :id="'item-date-add-date'"
+            v-model="rdv.notes"
+            type="textarea"
+            rows="10"
+            class="card-input justify-content-between"
+            @keydown.enter="addDate"
+            @keydown.esc="cancelAdding"
+          />
+        </div>
+        <div
           v-if="contact.dates.length > 0"
           class="text-light font-weight-bold"
         >
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <div class="card-input-title justify-content-between">
-              Date
-            </div>
-          </div>
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <input
-              v-show="add===true"
-              :id="'item-date-add-date'"
-              v-model="rdv.date"
-              type="text"
-              class="card-input justify-content-between"
-              @keydown.enter="addDate"
-              @keydown.esc="cancelAdding"
-            >
-          </div>
-
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <div class="card-input-title justify-content-between">
-              Type
-            </div>
-          </div>
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <input
-              v-show="add===true"
-              :id="'item-date-add-type'"
-              v-model="rdv.type"
-              type="text"
-              class="card-input justify-content-between"
-              @keydown.enter="addDate"
-              @keydown.esc="cancelAdding"
-            >
-          </div>
-
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <div class="card-input-title justify-content-between">
-              Notes
-            </div>
-          </div>
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <textarea
-              v-show="add===true"
-              :id="'item-date-add-date'"
-              v-model="rdv.notes"
-              type="textarea"
-              rows="10"
-              class="card-input justify-content-between"
-              @keydown.enter="addDate"
-              @keydown.esc="cancelAdding"
-            />
-          </div>
           <div
             v-for="(d, index) in contact.dates"
             :key="d.id"

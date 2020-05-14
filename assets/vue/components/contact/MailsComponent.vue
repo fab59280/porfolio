@@ -14,33 +14,33 @@
           </div>
         </h4>
         <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <div
+            class="card-input-title justify-content-between"
+          >
+            Email
+          </div>
+        </div>
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <input
+            v-show="add===true"
+            :id="'item-email-add-email'"
+            v-model="email.email"
+            type="text"
+            class="card-input justify-content-between"
+            @keydown.enter="addEmail"
+            @keydown.esc="cancelAdding"
+          >
+        </div>
+        <div
           v-if="contact.mails.length > 0"
           class="text-light font-weight-bold"
         >
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <div
-              class="card-input-title justify-content-between"
-            >
-              Email
-            </div>
-          </div>
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <input
-              v-show="add===true"
-              :id="'item-email-add-email'"
-              v-model="email.email"
-              type="text"
-              class="card-input justify-content-between"
-              @keydown.enter="addEmail"
-              @keydown.esc="cancelAdding"
-            >
-          </div>
           <div
             v-for="(mail, index) in contact.mails"
             :key="mail.id"

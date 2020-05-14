@@ -14,47 +14,47 @@
           </div>
         </h4>
         <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <div
+            class="card-input-title justify-content-between"
+          >
+            Numéro
+          </div>
+          <div
+            class="card-input-title justify-content-between"
+          >
+            Type
+          </div>
+        </div>
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <input
+            v-show="add===true"
+            :id="'item-telephone-add-telephone'"
+            v-model="telephone.telephone"
+            type="text"
+            class="card-input justify-content-between"
+            @keydown.enter="addTelephone"
+            @keydown.esc="cancelAdding"
+          >
+          <input
+            v-show="add===true"
+            :id="'item-telephone-add-type'"
+            v-model="telephone.type"
+            type="text"
+            class="card-input justify-content-between"
+            @keydown.enter="addTelephone"
+            @keydown.esc="cancelAdding"
+          >
+        </div>
+        <div
           v-if="contact.telephones.length > 0"
           class="text-light font-weight-bold"
         >
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <div
-              class="card-input-title justify-content-between"
-            >
-              Numéro
-            </div>
-            <div
-              class="card-input-title justify-content-between"
-            >
-              Type
-            </div>
-          </div>
-          <div
-            v-show="add === true"
-            class="stretch-title"
-          >
-            <input
-              v-show="add===true"
-              :id="'item-telephone-add-telephone'"
-              v-model="telephone.telephone"
-              type="text"
-              class="card-input justify-content-between"
-              @keydown.enter="addTelephone"
-              @keydown.esc="cancelAdding"
-            >
-            <input
-              v-show="add===true"
-              :id="'item-telephone-add-type'"
-              v-model="telephone.type"
-              type="text"
-              class="card-input justify-content-between"
-              @keydown.enter="addTelephone"
-              @keydown.esc="cancelAdding"
-            >
-          </div>
           <div
             v-for="(phone, index) in contact.telephones"
             :key="phone.id"
