@@ -45,7 +45,7 @@ export default {
     [CREATING_TECHNO_SUCCESS](state, techno) {
       state.isLoading = false;
       state.error     = null;
-      state.technos.push(techno);
+      state.technos['hydra:member'].push(techno);
     },
     [CREATING_TECHNO_ERROR](state, error) {
       state.isLoading = false;
@@ -86,7 +86,7 @@ export default {
     [DELETING_TECHNO_SUCCESS](state, index) {
       state.isLoading = false;
       state.error     = null;
-      state.technos.splice(index, 1);
+      state.technos['hydra:member'].splice(index, 1);
     },
     [DELETING_TECHNO_ERROR](state, error) {
       state.isLoading = false;

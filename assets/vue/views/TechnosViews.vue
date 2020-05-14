@@ -15,10 +15,61 @@
           <div class="col-12 grid-margin stretch-card">
             <div class="card">
               <div class="card-body">
-                <h4 class="card-title">
-                  {{ technos.length }} Technos enregistrées
+                <h4 class="card-title stretch-title">
+                  <div class="stretch-title-item">
+                    {{ technos['hydra:member'].length }} Technos enregistrées
+                  </div>
+                  <div
+                    class="stretch-title-item link stretch-title-item-add"
+                    @click="display"
+                  >
+                    +
+                  </div>
                 </h4>
-
+                <div class="form-row card-list-header">
+                  <div class="col-3">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="col-3">
+                    <label for="tjmRegion">Tjm Region</label>
+                  </div>
+                  <div class="col-3">
+                    <label for="tjmRegion">Tjm France</label>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <input
+                    v-show="add===true"
+                    :id="'item-add-techno-name'"
+                    v-model="techno.name"
+                    type="text"
+                    class="card-input"
+                    @keydown.enter="addTechno"
+                    @keydown.esc="cancelAdding"
+                  >
+                </div>
+                <div class="col-3">
+                  <input
+                    v-show="add === true"
+                    :id="'item-add-techno-tjmRegion'"
+                    v-model="techno.tjmRegion"
+                    type="text"
+                    class="card-input"
+                    @keydown.enter="addTechno"
+                    @keydown.esc="cancelAdding"
+                  >
+                </div>
+                <div class="col-3">
+                  <input
+                    v-show="add===true"
+                    :id="'item-add-techno-tjmFrance'"
+                    v-model="techno.tjmFrance"
+                    type="text"
+                    class="card-input"
+                    @keydown.enter="addTechno"
+                    @keydown.esc="cancelAdding"
+                  >
+                </div>
                 <div
                   v-if="isLoading"
                   class="row col"
@@ -48,27 +99,17 @@
                   v-else
                   class="text-light font-weight-bold card-list"
                 >
-                  <div class="form-row card-list-header">
-                    <div class="col-3">
-                      <label for="name">Name</label>
-                    </div>
-                    <div class="col-3">
-                      <label for="tjmRegion">Tjm Region</label>
-                    </div>
-                    <div class="col-3">
-                      <label for="tjmRegion">Tjm France</label>
-                    </div>
+                  <div
+                    v-for="(tech, index) in getTechnos"
+                    :key="tech.id"
+                    class="card-list-items"
+                  >
+                    <techno-component
+                      :techno="tech"
+                      :index="index"
+                      :add="add"
+                    />
                   </div>
-                </div>
-                <div
-                  v-for="(tech, index) in getTechnos"
-                  :key="tech.id"
-                  class="card-list-items"
-                >
-                  <techno-component
-                    :techno="tech"
-                    :index="index"
-                  />
                 </div>
               </div>
             </div>
@@ -89,12 +130,19 @@ export default {
   },
   data() {
     return {
-      technos: "",
+      technos: {
+        '@id': "",
+        '@context': "",
+        '@type': "",
+        'hydra:member': [],
+        'hydra:totalItems': ""
+      },
       techno: {
         name: "",
         tjmRegion: "",
         tjmFrance: ""
-      }
+      },
+      add: false
     };
   },
   computed:  {
@@ -118,7 +166,7 @@ export default {
     this.hydrate();
   },
   methods:   {
-    async createTechno() {
+    async addTechno() {
       await this.$store.dispatch("tech/create", this.$data.techno)
         .then(() => {
           this.$data.techno = {
@@ -126,6 +174,7 @@ export default {
             tjmRegion: "",
             tjmFrance: ""
           };
+          this.$data.add = false;
         }
         )
         .catch(error => {
@@ -140,7 +189,21 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    }
+    },
+    display() {
+      this.$data.add = true;
+      this.$nextTick(function () {
+        document.getElementById('item-add-techno-name').focus()
+      }.bind(this));
+    },
+    cancelAdding() {
+      this.$data.add = false;
+      this.$data.techno = {
+        name:      "",
+        tjmRegion: "",
+        tjmFrance: ""
+      };
+    },
   }
 };
 </script>

@@ -16,7 +16,7 @@
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">
-                  {{ contacts.length }} Contacts enregistrés
+                  {{ contacts['hydra:member'].length }} Contacts enregistrés
                 </h4>
 
                 <div
@@ -89,7 +89,13 @@ export default {
   },
   data() {
     return {
-      contacts: "",
+      contacts: {
+        '@id': "",
+        '@context': "",
+        '@type': "",
+        'hydra:member': [],
+        'hydra:totalItems': ""
+      },
       contact: {
         firstname: "",
         lastname: "",

@@ -35,7 +35,7 @@
               Technos
             </h4>
             <p class="text-small">
-              {{ technos.length }} Technos enregistrées
+              {{ technos['hydra:member'].length }} Technos enregistrées
             </p>
             <div
               v-for="(tech, index) in getTechnos"
@@ -57,7 +57,7 @@
               Annuaire
             </h4>
             <p class="text-small">
-              {{ contacts.length }} Contacts enregistrés
+              {{ contacts['hydra:member'].length }} Contacts enregistrés
             </p>
             <div
               v-for="contact in getContacts"
@@ -87,8 +87,20 @@ export default {
   },
   data() {
     return {
-      technos: "",
-      contacts: "",
+      technos: {
+        '@id': "",
+        '@context': "",
+        '@type': "",
+        'hydra:member': [],
+        'hydra:totalItems': ""
+      },
+      contacts: {
+        '@id': "",
+        '@context': "",
+        '@type': "",
+        'hydra:member': [],
+        'hydra:totalItems': ""
+      },
     };
   },
   computed:{

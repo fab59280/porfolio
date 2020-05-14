@@ -127,7 +127,7 @@ class Dates
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedAtValue()
+    public function setCreatedAtValue(): void
     {
         if($this->date === null) {
             $this->date = new \DateTime();
