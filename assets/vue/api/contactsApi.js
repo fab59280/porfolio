@@ -21,7 +21,11 @@ export default {
       headers: {
         accept: "application/ld+json",
       }
+    }).catch(error => {
+      console.log(error);
+      return null;
     });
+
   },
   findOneById(id) {
     return axios.get("/api/contacts/" + id, {

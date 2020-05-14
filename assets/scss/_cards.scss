@@ -342,6 +342,11 @@
                 color : color(dark-orange);
             }
         }
+        
+        &-add {
+            line-height: calc(1em + 0.5rem + 2px);
+            height: calc(1em + 0.5rem + 2px);
+        }
     }
     
     .card-input {

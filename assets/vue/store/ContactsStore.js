@@ -52,7 +52,7 @@ export default {
     [CREATING_CONTACT_SUCCESS](state, contact) {
       state.isLoading = false;
       state.error     = null;
-      state.contacts.push(contact);
+      state.contacts['hydra:member'].push(contact);
     },
     [CREATING_CONTACT_ERROR](state, error) {
       state.isLoading = false;
@@ -95,7 +95,7 @@ export default {
     [UPDATING_CONTACT_SUCCESS](state, contact) {
       state.isLoading = false;
       state.error     = null;
-      state.contacts.push(contact);
+      state.contacts['hydra:member'].push(contact);
       state.contact = contact;
     },
     [UPDATING_CONTACT_ERROR](state, error) {
@@ -109,7 +109,7 @@ export default {
     [DELETING_CONTACT_SUCCESS](state, index) {
       state.isLoading = false;
       state.error     = null;
-      state.contacts.splice(index, 1);
+      state.contacts['hydra:member'].splice(index, 1);
     },
     [DELETING_CONTACT_ERROR](state, error) {
       state.isLoading = false;
@@ -134,8 +134,12 @@ export default {
         let response = await ContactsAPI.findAll();
 
         for (let contact of response.data['hydra:member']) {
-          let entreprise = await ContactsAPI.findEntreprise(contact.id);
-          contact.entreprise = entreprise.data;
+          await ContactsAPI.findEntreprise(contact.id)
+            .then(response => {
+              if(response !== null) {
+                contact.entreprise = response.data;
+              }
+            });
         }
 
         commit(FETCHING_CONTACTS_SUCCESS, response.data);
@@ -163,12 +167,9 @@ export default {
       commit(UPDATING_CONTACT);
       try {
         let response = await ContactsAPI.update(data);
-        console.log(response.data);
         commit(UPDATING_CONTACT_SUCCESS, response.data);
         return response.data;
       } catch (error) {
-        console.log(data);
-        console.log(error);
         commit(UPDATING_CONTACT_ERROR, error);
       }
     },

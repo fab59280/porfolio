@@ -32,8 +32,17 @@
         @keydown.esc="cancelEditing"
       >
     </div>
-    <div class="text-light font-weight-bold col-3">
+    <div
+      v-if="contact.entreprise !== undefined"
+      class="text-light font-weight-bold col-3"
+    >
       {{ contact.entreprise.name }}
+    </div>
+    <div
+      v-else
+      class="text-light font-weight-bold col-3"
+    >
+      -
     </div>
     <div class="col-3">
       <a
@@ -102,7 +111,6 @@ export default {
       this.$data.editPostOri = JSON.parse(JSON.stringify(this.$data.editPost))
       // set focus ke element input
       this.$nextTick(function () {
-        console.log('item-contact-firstname-' + this.$data.editOffset)
         document.getElementById('item-contact-firstname-' + this.$data.editOffset).focus()
       }.bind(this))
     },

@@ -26,7 +26,7 @@
                     +
                   </div>
                 </h4>
-                <div class="form-row card-list-header">
+                <div class="form-row card-list-header text-light font-weight-bold ">
                   <div class="col-3">
                     <label for="name">Name</label>
                   </div>
@@ -37,38 +37,40 @@
                     <label for="tjmRegion">Tjm France</label>
                   </div>
                 </div>
-                <div class="col-3">
-                  <input
-                    v-show="add===true"
-                    :id="'item-add-techno-name'"
-                    v-model="techno.name"
-                    type="text"
-                    class="card-input"
-                    @keydown.enter="addTechno"
-                    @keydown.esc="cancelAdding"
-                  >
-                </div>
-                <div class="col-3">
-                  <input
-                    v-show="add === true"
-                    :id="'item-add-techno-tjmRegion'"
-                    v-model="techno.tjmRegion"
-                    type="text"
-                    class="card-input"
-                    @keydown.enter="addTechno"
-                    @keydown.esc="cancelAdding"
-                  >
-                </div>
-                <div class="col-3">
-                  <input
-                    v-show="add===true"
-                    :id="'item-add-techno-tjmFrance'"
-                    v-model="techno.tjmFrance"
-                    type="text"
-                    class="card-input"
-                    @keydown.enter="addTechno"
-                    @keydown.esc="cancelAdding"
-                  >
+                <div class="row">
+                  <div class="col-3">
+                    <input
+                      v-show="add===true"
+                      :id="'item-add-techno-name'"
+                      v-model="techno.name"
+                      type="text"
+                      class="card-input"
+                      @keydown.enter="addTechno"
+                      @keydown.esc="cancelAdding"
+                    >
+                  </div>
+                  <div class="col-3">
+                    <input
+                      v-show="add === true"
+                      :id="'item-add-techno-tjmRegion'"
+                      v-model="techno.tjmRegion"
+                      type="text"
+                      class="card-input"
+                      @keydown.enter="addTechno"
+                      @keydown.esc="cancelAdding"
+                    >
+                  </div>
+                  <div class="col-3">
+                    <input
+                      v-show="add===true"
+                      :id="'item-add-techno-tjmFrance'"
+                      v-model="techno.tjmFrance"
+                      type="text"
+                      class="card-input"
+                      @keydown.enter="addTechno"
+                      @keydown.esc="cancelAdding"
+                    >
+                  </div>
                 </div>
                 <div
                   v-if="isLoading"

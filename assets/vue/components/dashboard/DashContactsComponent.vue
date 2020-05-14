@@ -10,10 +10,12 @@
 
     <div class="text-info font-weight-bold d-flex justify-content-between align-items-center text-extra-small">
       <a
+        v-if="contact.mails.length > 0"
         :href="'mailto:' + contact.mails[0].email"
         :title="'send a mail to ' + contact.mails[0].email"
         class="card-link card-link-primary"
       >{{ contact.mails[0].email }}</a>
+      <span v-else>-</span>
     </div>
   </div>
 </template>
