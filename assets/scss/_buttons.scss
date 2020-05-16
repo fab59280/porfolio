@@ -1,0 +1,27 @@
+.btn {
+    &-default {
+        color            : #333;
+        background-color : #fff;
+        border-color     : #ccc
+    }
+}
+
+.custom-switch {
+    .custom-control-label {
+        &::before {
+            background-color : color(light-orange);
+            border-color     : color(light-orange);
+        }
+        
+        
+        &::after {
+            background-color : $white;
+        }
+    }
+    
+    .custom-control-input:checked ~ .custom-control-label::before {
+        border-color     : color(teal);
+        background-color : color(teal);
+    }
+    
+}

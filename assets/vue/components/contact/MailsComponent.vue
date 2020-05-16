@@ -51,7 +51,7 @@
               class="col-5"
             >
               <a
-                :href="'tel:' + mail.email"
+                :href="'mailto:' + mail.email"
                 :title="'mailto ' + mail.email"
               > {{ mail.email }}</a>
             </span>

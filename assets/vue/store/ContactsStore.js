@@ -128,10 +128,10 @@ export default {
         return null;
       }
     },
-    async findAll({commit}) {
+    async findAll({commit}, params) {
       commit(FETCHING_CONTACTS);
       try {
-        let response = await ContactsAPI.findAll();
+        let response = await ContactsAPI.findAll(params);
 
         for (let contact of response.data['hydra:member']) {
           await ContactsAPI.findEntreprise(contact.id)

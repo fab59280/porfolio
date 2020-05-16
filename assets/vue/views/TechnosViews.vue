@@ -1,7 +1,7 @@
 <template>
   <div class="content-wrapper">
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-12">
         <div class="row">
           <div class="col-sm-12 pr-0">
             <div class="d-lg-flex">

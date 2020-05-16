@@ -45,7 +45,7 @@
           >
         </div>
         <div class="text-light font-weight-bold ">
-&nbsp;
+                    &nbsp;
         </div>
         <div class="text-light font-weight-bold ">
           <span v-show="edit === false">{{ contact.role }}</span>
@@ -59,6 +59,22 @@
             @keydown.esc="cancelEditing"
           >
         </div>
+        <div class="text-light font-weight-bold ">
+                    &nbsp;
+        </div>
+        <div class="text-lght font-weight-bold custom-control custom-switch">
+          <input
+            id="customSwitch1"
+            v-model="contact.isActive"
+            type="checkbox"
+            class="custom-control-input"
+            @change="toggleActive"
+          >
+          <label
+            class="custom-control-label"
+            for="customSwitch1"
+          >Active</label>
+        </div>
       </div>
     </div>
   </div>
@@ -66,9 +82,9 @@
 
 <script>
 export default {
-  name: "ContactComponent",
-  props: {
-    contact:{
+  name:    "ContactComponent",
+  props:   {
+    contact: {
       type: Object,
       default() {
         return {};
@@ -77,9 +93,9 @@ export default {
   },
   data() {
     return {
-      edit: false,
+      edit:        false,
       editOffset:  -1,
-      editPost : {},
+      editPost:    {},
       editPostOri: {},
     }
   },
@@ -88,7 +104,7 @@ export default {
       this.saveContact();
     },
     startEditing(contact) {
-      this.$data.edit  = true
+      this.$data.edit        = true
       this.$data.editPost    = contact
       this.$data.editPostOri = JSON.parse(JSON.stringify(this.$data.editPost))
       // set focus ke element input
@@ -98,17 +114,20 @@ export default {
     },
     cancelEditing() {
       this.$set(this.contact, this.edi, this.editPostOri)
-      this.$data.edit = false
+      this.$data.edit        = false
       this.$data.editPostOri = {}
-      this.$data.editPost = {}
+      this.$data.editPost    = {}
     },
     async saveContact() {
       await this.$store.dispatch('contact/update', this.contact)
         .then(() => {
-          this.edit = false;
+          this.edit              = false;
           this.$data.editPostOri = {}
-          this.$data.editPost = {}
+          this.$data.editPost    = {}
         });
+    },
+    toggleActive() {
+      this.saveContact();
     }
   }
 }

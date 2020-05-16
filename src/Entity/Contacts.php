@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,6 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     "normalization_context"={"groups"={"read"}},
  *     "denormalization_context"={"groups"={"write"}},
  * })
+ * @ApiFilter(BooleanFilter::class, properties={"isActive"})
  */
 class Contacts
 {
@@ -74,6 +77,12 @@ class Contacts
      * @Groups({"read", "write"})
      */
     private $role;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @Groups({"read", "write"})
+     */
+    private $isActive;
 
     public function __construct()
     {
@@ -225,6 +234,18 @@ class Contacts
     public function setRole(?string $role): self
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
 
         return $this;
     }
