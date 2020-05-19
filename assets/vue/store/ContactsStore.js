@@ -149,6 +149,27 @@ export default {
         return null;
       }
     },
+    async findAllActive({commit}) {
+      commit(FETCHING_CONTACTS);
+      try {
+        let response = await ContactsAPI.findAll("?isActive=true");
+
+        for (let contact of response.data['hydra:member']) {
+          await ContactsAPI.findEntreprise(contact.id)
+            .then(response => {
+              if(response !== null) {
+                contact.entreprise = response.data;
+              }
+            });
+        }
+
+        commit(FETCHING_CONTACTS_SUCCESS, response.data);
+        return response.data;
+      } catch (error) {
+        commit(FETCHING_CONTACTS_ERROR, error);
+        return null;
+      }
+    },
     async findById({commit}, id) {
       commit(FETCHING_ONE_CONTACT);
       try {

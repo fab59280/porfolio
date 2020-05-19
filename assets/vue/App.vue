@@ -1,6 +1,8 @@
 <template>
   <div class="container-scroller">
-    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <nav
+      class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row"
+    >
       <div class="navbar-brand-wrapper d-flex align-items-center justify-content-between">
         <router-link
           class="navbar-brand"
@@ -97,7 +99,10 @@
       </div>
     </nav>
     <div class="container-fluid page-body-wrapper">
-      <div class="sidebar sidebar-offcanvas">
+      <div
+        v-if="user"
+        class="sidebar sidebar-offcanvas"
+      >
         <ul class="nav">
           <li class="nav-item">
             <div class="sidebar-menu-title">
@@ -138,7 +143,7 @@
           </li>
         </ul>
       </div>
-      <div class="main-panel">
+      <div :class="{'main-panel' : user, 'main-panel main-panel--login' : !user }">
         <router-view />
       </div>
     </div>

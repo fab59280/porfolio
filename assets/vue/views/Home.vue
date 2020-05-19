@@ -126,7 +126,7 @@ export default {
         });
     },
     async hydrateContacts() {
-      await this.$store.dispatch("contact/findAll")
+      await this.$store.dispatch("contact/findAllActive")
         .then(data => {
           this.$data.contacts = data;
         })

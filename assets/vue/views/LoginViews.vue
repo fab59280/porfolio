@@ -1,60 +1,72 @@
 <template>
-  <div>
-    <h1>Connexion</h1>
-    <form
-      method="post"
-      @submit.prevent="login"
-    >
-      <div v-if="hasError">
-        <div class="alert alert-danger">
-          {{ error }}
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-sm-12 pr-0">
+            <div class="d-lg-flex">
+              <h1 class="text-light font-weight-bold mb-0 mr-5">
+                Please Login
+              </h1>
+              <form
+                method="post"
+                @submit.prevent="login"
+              >
+                <div v-if="hasError">
+                  <div class="alert alert-danger">
+                    {{ error }}
+                  </div>
+                </div>
+
+                <label for="inputUsername">Username</label>
+                <input
+                  id="inputUsername"
+                  v-model="username"
+                  type="text"
+                  name="username"
+                  class="form-control"
+                  required
+                  autofocus
+                >
+                <label for="inputPassword">Password</label>
+                <input
+                  id="inputPassword"
+                  v-model="password"
+                  type="password"
+                  name="password"
+                  class="form-control"
+                  required
+                >
+
+                <button
+                  class="btn btn-lg btn-primary"
+                  type="submit"
+                >
+                  Login
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
-
-      <label for="inputUsername">Username</label>
-      <input
-        id="inputUsername"
-        v-model="username"
-        type="text"
-        name="username"
-        class="form-control"
-        required
-        autofocus
-      >
-      <label for="inputPassword">Password</label>
-      <input
-        id="inputPassword"
-        v-model="password"
-        type="password"
-        name="password"
-        class="form-control"
-        required
-      >
-
-      <button
-        class="btn btn-lg btn-primary"
-        type="submit"
-      >
-        Login
-      </button>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  name:         'Login',
+  name:     'Login',
   data() {
     return {
       username:     "",
       password:     "",
       isError:      false,
       errorMessage: "",
-      user: ""
+      user:         ""
     }
   },
-  computed:  {
+  computed: {
     isLoading() {
       return this.$store.getters["login/isLoading"];
     },
@@ -71,7 +83,7 @@ export default {
       return this.$store.getters["login/user"];
     }
   },
-  methods: {
+  methods:  {
     async login() {
       console.log('send login');
 
@@ -84,8 +96,8 @@ export default {
           this.username = '';
           this.password = '';
 
-          if(data.error !== undefined) {
-            this.$data.isError = true;
+          if (data.error !== undefined) {
+            this.$data.isError      = true;
             this.$data.errorMessage = data.error;
             return false;
           }
@@ -98,7 +110,7 @@ export default {
         })
         .catch(error => {
           console.log(error);
-          this.$data.isError = true;
+          this.$data.isError      = true;
           this.$data.errorMessage = error;
 
         })

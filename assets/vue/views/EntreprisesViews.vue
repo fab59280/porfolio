@@ -1,81 +1,163 @@
 <template>
-  <div>
-    <div class="row col">
-      <h1>Entreprises</h1>
-    </div>
-    <div
-      v-if="isLoading"
-      class="row col"
-    >
-      <p>Loading...</p>
-    </div>
-
-    <div
-      v-else-if="hasError"
-      class="row col"
-    >
-      <div
-        class="alert alert-danger"
-        role="alert"
-      >
-        {{ error }}
-      </div>
-    </div>
-
-    <div
-      v-else-if="!hasEntreprises"
-      class="row col"
-    >
-      No entreprises found!
-    </div>
-
-    <ul
-      v-else
-      class="list-group row col"
-    >
-      <li>
-        <div class="form-row">
-          <div class="col-4">
-            <label for="name">Name</label>
-          </div>
-          <div class="col-4">
-            <label for="tjmRegion">Type</label>
-          </div>
-          <div class="col-4">
-            <label for="tjmRegion">Localité</label>
-          </div>
-          <div class="col-4">
-            <label for="tjmFrance">Siret</label>
-          </div>
-          <div class="col-4">
-            <label for="actions">Actions</label>
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-12 pr-0">
+            <div class="d-lg-flex">
+              <h3 class="text-light font-weight-bold mb-0 mr-5">
+                List of all Technologies
+              </h3>
+            </div>
           </div>
         </div>
-      </li>
-      <li
-        v-for="(entreprise, index) in getEntreprises"
-        :key="entreprise.id"
-        :class="{'list-group-item list-group-item-info': index % 2 === 0, 'list-group-item list-group-item-primary': index % 2
-          !==
-          0 }"
-      >
-        <entreprises-component :entreprise="entreprise" />
-      </li>
-    </ul>
+        <div class="row mt-3">
+          <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title stretch-title">
+                  <div class="stretch-title-item">
+                    {{ entreprises['hydra:member'].length }} Entreprises enregistrées
+                  </div>
+                  <div
+                    class="stretch-title-item link stretch-title-item-add"
+                    @click="display"
+                  >
+                    +
+                  </div>
+                </h4>
+                <div class="form-row card-list-header text-light font-weight-bold ">
+                  <div class="col-3">
+                    <label for="name">Name</label>
+                  </div>
+                  <div class="col-2">
+                    <label for="siret">Type</label>
+                  </div>
+                  <div class="col-3">
+                    <label for="siret">Ville</label>
+                  </div>
+                  <div class="col-2">
+                    <label for="siret">Siret</label>
+                  </div>
+                  <div class="col-2">
+                    <label for="siret">Actions</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-3">
+                    <input
+                      v-show="add===true"
+                      :id="'item-add-entreprise-name'"
+                      v-model="entreprise.name"
+                      type="text"
+                      class="card-input"
+                      @keydown.enter="addTechno"
+                      @keydown.esc="cancelAdding"
+                    >
+                  </div>
+                  <div class="col-2">
+                    <input
+                      v-show="add===true"
+                      :id="'item-add-entreprise-type'"
+                      v-model="entreprise.type"
+                      type="text"
+                      class="card-input"
+                      @keydown.enter="addTechno"
+                      @keydown.esc="cancelAdding"
+                    >
+                  </div>
+                  <div
+                    v-show="add === true"
+                    class="col-3"
+                  />
+                  <div class="col-2">
+                    <input
+                      v-show="add === true"
+                      :id="'item-add-entreprise-siret'"
+                      v-model="entreprise.siret"
+                      type="text"
+                      class="card-input"
+                      @keydown.enter="addTechno"
+                      @keydown.esc="cancelAdding"
+                    >
+                  </div>
+                </div>
+                <div
+                  v-if="isLoading"
+                  class="row col"
+                >
+                  <p>Loading...</p>
+                </div>
+
+                <div
+                  v-else-if="hasError"
+                  class="row col"
+                >
+                  <div
+                    class="alert alert-danger"
+                    role="alert"
+                  >
+                    {{ error }}
+                  </div>
+                </div>
+
+                <div
+                  v-else-if="!hasEntreprises"
+                  class="row col"
+                >
+                  No entreprises found!
+                </div>
+                <div
+                  v-else
+                  class="text-light font-weight-bold card-list"
+                >
+                  <div
+                    v-for="(ent, index) in getEntreprises"
+                    :key="ent.id"
+                    class="card-list-items"
+                  >
+                    <entreprise-component
+                      :entreprise="ent"
+                      :index="index"
+                      :add="add"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import EntreprisesComponent from "../components/EntreprisesComponent";
+import EntrepriseComponent from "../components/EntrepriseComponent";
 
 export default {
-  name:      "EntreprisesView",
+  name:      "Entreprises",
   components: {
-    EntreprisesComponent
+    EntrepriseComponent
   },
   data() {
     return {
-      entreprises: []
+      entreprises: {
+        '@id': "",
+        '@context': "",
+        '@type': "",
+        'hydra:member': [],
+        'hydra:totalItems': ""
+      },
+      entreprise: {
+        name:      "",
+        siret: "",
+        type: "",
+        address: {
+          city: ""
+        }
+      },
+      add: false
     };
   },
   computed:  {
@@ -98,28 +180,47 @@ export default {
   beforeMount() {
     this.hydrate();
   },
-  created() {
-    this.hydrate();
-  },
   methods:   {
-    async createPost() {
-      const result = await this.$store.dispatch("entreprise/create", this.$data.entreprises);
-      if (result !== null) {
-        this.$data.entreprises = this.$store.getters["entreprise/entreprises"];
-      }
-    },
-    async getOne(id) {
-      const result = await this.$store.dispatch("entreprise/findById", id)
-      if (result !== null) {
-        this.$data.entreprises = this.$store.getters["entreprise/entreprises"];
-      }
+    async addTechno() {
+      await this.$store.dispatch("entreprise/create", this.$data.entreprise)
+        .then(() => {
+          this.$data.entreprise = {
+            name:      "",
+            siret: "",
+            type: "",
+            address: ""
+          };
+          this.$data.add = false;
+        }
+        )
+        .catch(error => {
+          console.log(error);
+        });
     },
     async hydrate() {
       await this.$store.dispatch("entreprise/findAll")
         .then(data => {
           this.$data.entreprises = data;
         })
-    }
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    display() {
+      this.$data.add = true;
+      this.$nextTick(function () {
+        document.getElementById('item-add-entreprise-name').focus()
+      }.bind(this));
+    },
+    cancelAdding() {
+      this.$data.add = false;
+      this.$data.entreprise = {
+        name:      "",
+        siret: "",
+        type: "",
+        address: ""
+      };
+    },
   }
 };
 </script>
