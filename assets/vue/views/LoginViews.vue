@@ -57,13 +57,20 @@
 
 export default {
   name:     'Login',
+  props: {
+    user:{
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  },
   data() {
     return {
       username:     "",
       password:     "",
       isError:      false,
-      errorMessage: "",
-      user:         ""
+      errorMessage: ""
     }
   },
   computed: {
@@ -83,37 +90,35 @@ export default {
       return this.$store.getters["login/user"];
     }
   },
+  created() {
+    let redirect = this.$route.query.redirect;
+    if (this.$store.getters["login/isAuthenticated"]) {
+      if (typeof redirect !== "undefined") {
+        this.$router.push({path: redirect});
+      } else {
+        this.$router.push({path: "/"});
+      }
+    }
+  },
   methods:  {
     async login() {
-      console.log('send login');
 
-      await this.$store.dispatch("login/login",
-        {
+      let payload = {
           username: this.$data.username,
           password: this.$data.password
-        })
-        .then(data => {
-          this.username = '';
-          this.password = '';
+        },
+        redirect = this.$route.query.redirect;
 
-          if (data.error !== undefined) {
-            this.$data.isError      = true;
-            this.$data.errorMessage = data.error;
-            return false;
-          }
-          this.$store.dispatch('login/getUser', data.location)
-            .then(user => {
-              this.$parent.user = user;
-              console.log(this.$store.getters['login/user']);
-            })
-          window.location.pathname = this.$route.query.redirect || '/';
-        })
-        .catch(error => {
-          console.log(error);
-          this.$data.isError      = true;
-          this.$data.errorMessage = error;
+      await this.$store.dispatch("login/login", payload);
 
-        })
+      if (!this.$store.getters["login/hasError"]) {
+        if (typeof redirect !== "undefined") {
+          await this.$router.push({path: redirect});
+        } else {
+          await this.$router.push({path: "/"});
+        }
+      }
+
     }
   }
 }

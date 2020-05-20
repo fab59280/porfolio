@@ -5,15 +5,17 @@ namespace App\Controller;
 use ApiPlatform\Core\Api\IriConverterInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/app_login", name="app_login", methods={"POST"})
+     * @throws \JsonException
      */
-    public function login(IriConverterInterface $iriConverter): Response
+    public function login(IriConverterInterface $iriConverter, SerializerInterface $serializer): JsonResponse
     {
         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->json([
@@ -21,9 +23,18 @@ class SecurityController extends AbstractController
             ], 400);
         }
 
-        return new Response(null, 204, [
-            'Location' => $iriConverter->getIriFromItem($this->getUser())
-        ]);
+        $user = $this->getUser();
+        $data = null;
+        if (! empty($user)) {
+            $userClone = clone $user;
+            $userClone->setPassword('');
+            $data = $serializer->serialize($userClone, JsonEncoder::FORMAT);
+        }
+
+        return $this->json([
+            'user'            => $data,
+            'isAuthenticated' => !empty($this->getUser())
+        ], 200);
     }
 
     /**

@@ -85,6 +85,14 @@ export default {
     DashTechnoComponent,
     DashContactsComponent
   },
+  props: {
+    user:{
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  },
   data() {
     return {
       technos: {

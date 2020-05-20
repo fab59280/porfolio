@@ -38,10 +38,12 @@
                 {{ user.username }}
               </span>
               <span v-else>
-                <a
-                  href="#"
+                <router-link
+                  class="navbar-brand"
+                  to="/login"
                   title="Se connecter"
-                >Se connecter </a>
+                >
+                  Se connecter </router-link>
               </span>
             </a>
             <div
@@ -151,18 +153,33 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   name:    "App",
-  data() {
-    return {
-      user: null
-    };
-  },
-  mounted() {
-    if (window.user) {
-      this.user = window.user;
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters["login/isAuthenticated"]
+    },
+    user() {
+      return this.$store.getters["login/user"];
     }
-  }
+  },
+  created() {
+    let isAuthenticated = JSON.parse(this.$parent.$el.attributes["data-is-authenticated"].value),
+      user = JSON.parse(this.$parent.$el.attributes["data-user"].value);
+
+    let payload = { isAuthenticated: isAuthenticated, user: user };
+    this.$store.dispatch("login/onRefresh", payload);
+
+    axios.interceptors.response.use(undefined, (err) => {
+      return new Promise(() => {
+        if (err.response.status === 401) {
+          this.$router.push({path: "/login"})
+        }
+        throw err;
+      });
+    });
+  },
 }
 </script>
