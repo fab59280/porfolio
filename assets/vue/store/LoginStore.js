@@ -1,5 +1,4 @@
 import LoginAPI from "../api/loginApi";
-import loginApi from "../api/loginApi";
 
 const LOGIN         = "LOGIN",
   LOGIN_SUCCESS     = "LOGIN_SUCCESS",
@@ -52,7 +51,7 @@ export default {
       state.isLoading = false;
       state.error = null;
       state.isAuthenticated = payload.isAuthenticated;
-      state.user = JSON.parse(payload.user);
+      state.user = payload.user;
     }
   },
   actions:    {

@@ -26,7 +26,7 @@
         class="link"
         @click="$router.push('/entreprise-' + entreprise.id)"
       >
-        {{ entreprise.type }} €
+        {{ entreprise.type }}
       </span>
       <input
         v-show="editOffset===index"
@@ -43,7 +43,7 @@
         v-show="editOffset !== index"
         v-if="entreprise.address !== undefined"
       >
-        {{ entreprise.address.city }} €
+        {{ entreprise.address.city }}
       </span>
     </div>
     <div class="col-2">
