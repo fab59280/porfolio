@@ -231,6 +231,10 @@ export default {
       this.saveContact(true);
     },
     display() {
+      const now = new Date();
+      const date = now.toISOString().replace('T', ' ').split('.')[0];
+      this.$data.rdv.date = date;
+
       this.$data.add = true;
       this.$data.show = false;
       this.$data.edit = false;
