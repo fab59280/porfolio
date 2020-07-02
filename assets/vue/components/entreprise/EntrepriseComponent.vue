@@ -62,45 +62,73 @@
         <div class="text-light font-weight-bold ">
                     &nbsp;
         </div>
-        <div
-          v-if="entreprise.address !== undefined"
-          v-show="edit === false"
-          class="text-light font-weight-bold"
-        >
-          <p>{{ entreprise.address.address }}</p>
-          <p>{{ entreprise.address.postcode }} {{ entreprise.address.city }}</p>
-        </div>
-        <div
-          v-show="edit === true"
-          class="text-light font-weight-bold"
-        >
-          <input
-            v-show="edit===true"
-            :id="'item-entreprise-address-address'"
-            v-model="entreprise.address.address"
-            type="text"
-            class="card-input"
-            @keydown.enter="updateInfosAddresses"
-            @keydown.esc="cancelEditing"
+        <div class="row">
+          <div
+            v-if="entreprise.address !== undefined"
+            v-show="edit === false"
+            class="text-light font-weight-bold col-10"
           >
-          <input
-            v-show="edit===true"
-            :id="'item-entreprise-address-postcode'"
-            v-model="entreprise.address.postcode"
-            type="text"
-            class="card-input"
-            @keydown.enter="updateInfosAddresses"
-            @keydown.esc="cancelEditing"
+            <p>{{ entreprise.address.address }}</p>
+            <p>{{ entreprise.address.postcode }} {{ entreprise.address.city }}</p>
+            <p>{{ entreprise.address.country }}</p>
+          </div>
+          <div
+            class="col-2"
           >
-          <input
-            v-show="edit===true"
-            :id="'item-entreprise-address-city'"
-            v-model="entreprise.address.city"
-            type="text"
-            class="card-input"
-            @keydown.enter="updateInfosAddresses"
-            @keydown.esc="cancelEditing"
+            <a
+              :href="'https://www.google.fr/maps/place/' + entreprise.address.address.replace(/\s/g, '+').replace(/[,]/g, ' ') + ',' + entreprise.address.postcode +
+                ',' +
+                entreprise.address.city"
+              target="_blank"
+              class="card-link card-link-primary"
+              :title="'Edit ' + entreprise.name"
+            >
+              <i
+                class="fa fa-map-marker"
+              />
+            </a>
+          </div>
+          <div
+            v-show="edit === true"
+            class="text-light font-weight-bold"
           >
+            <input
+              v-show="edit===true"
+              :id="'item-entreprise-address-address'"
+              v-model="entreprise.address.address"
+              type="text"
+              class="card-input"
+              @keydown.enter="updateInfosAddresses"
+              @keydown.esc="cancelEditing"
+            >
+            <input
+              v-show="edit===true"
+              :id="'item-entreprise-address-postcode'"
+              v-model="entreprise.address.postcode"
+              type="text"
+              class="card-input"
+              @keydown.enter="updateInfosAddresses"
+              @keydown.esc="cancelEditing"
+            >
+            <input
+              v-show="edit===true"
+              :id="'item-entreprise-address-city'"
+              v-model="entreprise.address.city"
+              type="text"
+              class="card-input"
+              @keydown.enter="updateInfosAddresses"
+              @keydown.esc="cancelEditing"
+            >
+            <input
+              v-show="edit===true"
+              :id="'item-entreprise-address-country'"
+              v-model="entreprise.address.country"
+              type="text"
+              class="card-input"
+              @keydown.enter="updateInfosAddresses"
+              @keydown.esc="cancelEditing"
+            >
+          </div>
         </div>
       </div>
     </div>

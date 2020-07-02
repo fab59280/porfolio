@@ -181,7 +181,7 @@ export default {
     async addEntreprise() {
       console.log(this.$data.entreprise);
       await this.$store.dispatch("entreprise/create", this.$data.entreprise)
-        .then((response) => {
+        .then(() => {
           this.$data.entreprise = {
             name:      "",
             siret: "",

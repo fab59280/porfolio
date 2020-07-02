@@ -24,28 +24,35 @@ class Addresses
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"read", "write"})
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"read", "write"})
      */
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true, )
      * @Groups({"read", "write"})
      */
     private $country;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=5, nullable=true)
      * @Groups({"read", "write"})
      */
     private $postcode;
+
+    public function __construct()
+    {
+        if(!$this->country) {
+            $this->setCountry('FR');
+        }
+    }
 
     public function getId(): ?int
     {

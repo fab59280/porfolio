@@ -45,6 +45,16 @@
       >
         {{ entreprise.address.city }}
       </span>
+      <input
+        v-if="entreprise.address !== undefined"
+        v-show="editOffset===index"
+        :id="'item-entreprise-city-' + index"
+        v-model="entreprise.address.city"
+        type="text"
+        class="card-input"
+        @keydown.enter="updateEntreprise"
+        @keydown.esc="cancelEditing"
+      >
     </div>
     <div class="col-2">
       <span
@@ -109,9 +119,8 @@ export default {
   },
   methods: {
     async updateEntreprise() {
-      await this.$store.dispatch("tech/update", {entreprise: this.$data.editPost, index: this.$data.editOffset })
-        .then(data => {
-          this.$data.entreprises = data;
+      await this.$store.dispatch("entreprise/update", this.entreprise)
+        .then(() => {
 
           this.$data.editOffset = -1
           this.$data.editPostOri = {}
@@ -121,8 +130,8 @@ export default {
           console.log(error);
         });
     },
-    async deleteEntreprise(entreprise, index) {
-      await this.$store.dispatch("tech/delete", {entreprise: entreprise, index: index })
+    async deleteEntreprise(entreprise) {
+      await this.$store.dispatch("entreprise/delete", entreprise)
         .catch(error => {
           console.log(error);
         });
