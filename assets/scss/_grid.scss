@@ -1,0 +1,5 @@
+.row-list {
+    padding-bottom: $card-spacing-y / 2;
+    padding-top: $card-spacing-y / 2;
+    border-bottom: 1px solid lighten($card-bg, 10%);
+}

@@ -137,7 +137,6 @@ export default {
       try {
         let response = await EntrepriseAPI.findOneById(id);
         commit(FETCHING_ENTREPRISE_SUCCESS, response.data);
-        console.log(response.data);
         return response.data;
       } catch (error) {
         commit(FETCHING_ENTREPRISES_ERROR, error);

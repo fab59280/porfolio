@@ -9,7 +9,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AddressesRepository")
  * @ApiResource(attributes={"security"="is_granted('ROLE_ADMIN')",
- *     "normalization_context"={"groups"={"read"}}
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}},
  *     })
  */
 class Addresses
@@ -24,25 +25,25 @@ class Addresses
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=5)
-     * @Groups({"read"})
+     * @Groups({"read", "write"})
      */
     private $postcode;
 

@@ -37,7 +37,13 @@ export default {
     })
   },
   update(contact) {
-    return axios.put("/api/contacts/" + contact.id, JSON.parse(JSON.stringify(contact)), {
+    let url;
+    if(contact.id) {
+      url = "api/contacts/" + contact.id;
+    } else {
+      url = contact['@id'];
+    }
+    return axios.put(url, JSON.parse(JSON.stringify(contact)), {
       headers: {
         "accept":       "application/ld+json",
         "Content-Type": "application/ld+json"

@@ -121,7 +121,7 @@ export default {
       this.$data.editPost = {}
     },
     deleteEditing(contact, index) {
-      if (confirm("Are you sure you want to delete this entry ? " + contact.name)) {
+      if (confirm("Are you sure you want to delete this entry ? " + contact.firstname + " " + contact.lastname)) {
         this.deleteContact(contact, index);
       }
     }

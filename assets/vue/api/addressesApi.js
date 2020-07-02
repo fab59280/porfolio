@@ -1,10 +1,10 @@
 import axios from "axios";
 
 export default {
-  create(entreprise) {
-    console.log(entreprise);
-    return axios.post("/api/entreprises", {
-      entreprise
+  create(addresse) {
+    console.log(addresse);
+    return axios.post("/api/addresses", {
+      addresse
     }, {
       headers: {
         "accept":       "application/ld+json",
@@ -13,35 +13,22 @@ export default {
     });
   },
   findAll() {
-    return axios.get("/api/entreprises", {
+    return axios.get("/api/addresses", {
       headers: {
         accept: "application/ld+json",
       }
     });
   },
   findOneById(id) {
-    let url;
-    if(typeof id === 'string') {
-      url = "/api/entreprises/" + id;
-    } else {
-      url = id;
-    }
-    let data =  axios.get(url, {
+    let data =  axios.get("/api/addresses/" + id, {
       headers: {
         accept: "application/ld+json",
       }
     });
     return data;
   },
-  update(entreprise) {
-    let url;
-    if(entreprise.id) {
-      url = "api/entreprises/" + entreprise.id;
-    } else {
-      url = entreprise['@id'];
-    }
-
-    return axios.put(url, JSON.parse(JSON.stringify(entreprise)), {
+  update(addresse) {
+    return axios.put("api/addresses/" + addresse.id, JSON.parse(JSON.stringify(addresse)), {
       headers: {
         "accept":       "application/ld+json",
         "Content-Type": "application/ld+json"
@@ -50,7 +37,7 @@ export default {
     )
   },
   delete(id) {
-    return axios.delete("/api/entreprises/" + id,
+    return axios.delete("/api/addresses/" + id,
       {
         headers: {
           "accept":       "application/ld+json"

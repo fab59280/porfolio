@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12 col-sm-12 col-md-12 col-xl-8 grid-margin stretch-card">
+  <div class="col-12 col-sm-12 col-md-6 col-xl-8 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title stretch-title">
@@ -14,11 +14,14 @@
           </div>
         </h4>
         <div class="form-row card-list-header text-light font-weight-bold">
-          <div class="col-5">
+          <div class="col-3">
             <label for="item-add-dates-date">Date</label>
           </div>
-          <div class="col-5">
+          <div class="col-3">
             <label for="item-add-dates-type">Type</label>
+          </div>
+          <div class="col-4">
+            <label for="item-add-dates-contact">Contact</label>
           </div>
           <div class="col-2">
             <label for="item-add-dates-detail">Actions</label>
@@ -45,6 +48,33 @@
             @keydown.enter="addDate"
             @keydown.esc="cancelAdding"
           >
+        </div>
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <div class="card-input-title justify-content-between">
+            Contact
+          </div>
+        </div>
+        <div
+          v-show="add === true"
+          class="stretch-title"
+        >
+          <select
+            id="item-contact-entreprise"
+            v-model="econtact.index"
+            class="card-input"
+            @keydown.esc="cancelEditing"
+          >
+            <option
+              v-for="(cont, i) in entreprise.contacts"
+              :key="cont.id"
+              :value="i"
+            >
+              {{ cont.firstname }} {{ cont.lastname }}
+            </option>
+          </select>
         </div>
 
         <div
@@ -94,47 +124,44 @@
           />
         </div>
         <div
-          v-if="contact.dates.length > 0"
+          v-if="entreprise.dates.length > 0"
           class="text-light font-weight-bold"
         >
           <div
-            v-for="(d, index) in contact.dates"
+            v-for="(d, index) in entreprise.dates"
             :key="d.id"
             class="justify-content-between row row-list"
           >
             <div
-              v-show="editOffset !== index || edit === false"
-              class="col-5"
+              class="col-3"
             >
               {{ d.date }}
             </div>
-            <input
-              v-show="editOffset === index && edit === true"
-              :id="'item-date-date-' + index"
-              v-model="d.date"
-              type="text"
-              class="card-input"
-              @keydown.enter="saveContact"
-              @keydown.esc="cancelEditing"
-            >
             <div
-              v-show="editOffset !== index || edit === false"
-              class="col-5"
+              class="col-3"
             >
               {{ d.type }}
             </div>
-            <input
-              v-show="editOffset === index && edit === true"
-              :id="'item-date-type-' + index"
-              v-model="d.type"
-              type="text"
-              class="card-input"
-              @keydown.enter="saveContact"
-              @keydown.esc="cancelEditing"
-            >
+            <div class="col-4">
+              <span
+                v-for="contact in entreprise.contacts"
+                :key="contact.id"
+              >
+                <span
+                  v-for="date in contact.dates"
+                  :key="date.id"
+                >
+                  <span
+                    v-if="date.id === d.id"
+                  >
+                    {{ contact.firstname }} {{ contact.lastname }}
+                  </span>
+                </span>
+              </span>
+            </div>
             <div class="col-2">
               <a
-                v-show="show === false"
+                v-show="show === false || editOffset !== index"
                 href="#"
                 class="card-link card-link-primary"
                 :title="'See Notes'"
@@ -145,7 +172,7 @@
                 />
               </a>
               <a
-                v-show="show === true"
+                v-show="show === true && editOffset === index"
                 href="#"
                 class="card-link card-link-primary"
                 :title="'See Notes'"
@@ -155,25 +182,9 @@
                   class="fa fa-eye-slash"
                 />
               </a>
-              <a
-                href="#"
-                class="card-link card-link-primary"
-                :title="'Edit ' + d.date"
-                @click.prevent="startEditing(d, index)"
-              >
-                <i class="fa fa-edit" />
-              </a>
-              <a
-                href="#"
-                class="card-link card-link-danger"
-                :title="'Delete ' + d.date "
-                @click.prevent="deleteEditing(d, index)"
-              >
-                <i class="fa fa-times" />
-              </a>
             </div>
             <div
-              v-show="(show === true || edit === true) && editOffset === index"
+              v-show="show === true && editOffset === index"
               class="textarea-zone"
             >
               <textarea
@@ -183,8 +194,6 @@
                 class="card-input"
                 :disabled="show === true"
                 rows="10"
-                @keydown.enter.ctrl="saveContact"
-                @keydown.esc="cancelEditing"
               />
             </div>
           </div>
@@ -204,7 +213,7 @@
 export default {
   name: "DatesComponent",
   props: {
-    contact:{
+    entreprise: {
       type: Object,
       default() {
         return {};
@@ -218,6 +227,9 @@ export default {
         type:"",
         notes:""
       },
+      econtact: {
+        index: ""
+      },
       add: false,
       show: false,
       edit: false,
@@ -227,9 +239,6 @@ export default {
     }
   },
   methods: {
-    addDate() {
-      this.saveContact(true);
-    },
     display() {
       this.$data.add = true;
       this.$data.show = false;
@@ -238,10 +247,12 @@ export default {
         document.getElementById('item-date-add-date').focus()
       }.bind(this));
     },
+    addDate() {
+      this.saveContact(true);
+    },
     showNotes(index) {
       this.$data.show = true;
       this.$data.editOffset  = index
-
     },
     hideNotes() {
       this.$data.show = false;
@@ -266,6 +277,9 @@ export default {
         type:"",
         notes:""
       };
+      this.$data.econtact = {
+        index:""
+      };
     },
     cancelEditing() {
       this.$data.edit = false;
@@ -273,35 +287,16 @@ export default {
       this.$data.editPostOri = {}
       this.$data.editPost = {}
     },
-    deleteEditing(mail, index) {
-      if (confirm("Are you sure you want to delete this entry ? ")) {
-        this.contact.dates.splice(index, 1);
-        this.saveContact();
-      }
-    },
     async saveContact(add = false) {
-      let url = add === true ? 'date/create' : 'date/update';
+      let url = add === true ? 'date/create' : 'dates/update';
       let data = add === true ? this.$data.rdv : this.$data.editPost;
 
       await this.$store.dispatch(url, data)
-        .then((dates) => {
-          this.contact.dates.push(dates);
-          this.contact.entreprise.dates.push(dates);
+        .then((response) => {
+          this.entreprise.dates.push(response);
+          this.entreprise.contacts[this.$data.econtact.index].dates.push(response);
 
-          this.$store.dispatch('contact/update', this.contact)
-            .then((contact) => {
-
-              this.contact.entreprise.contacts.forEach(el => {
-                if(el.id === contact.id) {
-                  el.dates = contact.dates;
-                }
-              })
-              this.contact.entreprise.dates.push(dates);
-              this.$store.dispatch('entreprise/update', this.contact.entreprise)
-                .catch(error => {
-                  console.log(error);
-                })
-            })
+          this.$store.dispatch('entreprise/update', this.entreprise)
             .catch(error => {
               console.log(error);
             })
@@ -317,6 +312,9 @@ export default {
             date:"",
             type:"",
             notes:""
+          };
+          this.$data.econtact = {
+            index:""
           };
         });
     }

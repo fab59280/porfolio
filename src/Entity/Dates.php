@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -41,7 +43,7 @@ class Dates
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprises", inversedBy="dates")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @ApiSubresource(maxDepth=1)
      */
     private $entreprise;
@@ -64,12 +66,12 @@ class Dates
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -130,7 +132,7 @@ class Dates
     public function setCreatedAtValue(): void
     {
         if($this->date === null) {
-            $this->date = new \DateTime();
+            $this->date = new DateTime();
         }
     }
 

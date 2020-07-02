@@ -1,109 +1,57 @@
 <template>
-  <div>
-    <div class="row col">
-      <h1>Entreprise {{ getEntreprise.name }}</h1>
-    </div>
-
-    <div
-      v-if="isLoading"
-      class="row col"
-    >
-      <p>Loading...</p>
-    </div>
-
-    <div
-      v-else-if="hasError"
-      class="row col"
-    >
-      <div
-        class="alert alert-danger"
-        role="alert"
-      >
-        {{ error }}
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-9">
+        <div class="row">
+          <div class="col-sm-12 pr-0">
+            <div class="d-lg-flex">
+              <h1 class="text-light font-weight-bold mb-0 mr-5">
+                Fiche entreprise : {{ entreprise.name }}
+              </h1>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div
-      v-else-if="!hasEntreprise"
-      class="row col"
-    >
-      No entreprises found!
+    <div class="row mt-3">
+      <EntrepriseComponent
+        :entreprise="entreprise"
+      />
+      <DatesComponent :entreprise="entreprise" />
     </div>
-    <ul
-      v-else
-      class="list-group row col"
-    >
-      <li class="list-group-item list-group-item-info">
-        <div
-          class="row col"
-        >
-          <div class="col-12 col-lg-3">
-            {{ getEntreprise.name }}
-          </div>
 
-          <div
-            v-if="getEntreprise.type !== ''"
-            class="col-12 col-lg-3"
-          >
-            {{ getEntreprise.type }}
-          </div>
-          <div
-            v-else
-            class="col-12 col-lg-3"
-          >
-            -
-          </div>
-          <div
-            v-if="getEntreprise.siret !== ''"
-            class="col-12 col-lg-3"
-          >
-            {{ getEntreprise.siret }}
-          </div>
-          <div
-            v-else
-            class="col-12 col-lg-3"
-          >
-            -
-          </div>
-          <div class="row">
-            <div
-              v-if="getEntreprise.contacts.length > 0"
-              class="col-12 col-lg-3"
-            >
-              <ul
-                v-for="contact in getEntreprise.contacts"
-                :key="contact.id"
-              >
-                <li>
-                  {{ contact.firstname }} {{ contact.lastname }}
-                </li>
-              </ul>
-            </div>
-            <div
-              v-else
-              class="col-12 col-lg-3"
-            />
-          </div>
-        </div>
-      </li>
-    </ul>
+    <div class="row mt-3">
+      <ContactsComponent
+        :entreprise="entreprise"
+      />
+      <MissionsComponent
+        :entreprise="entreprise"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import EntrepriseComponent from "../components/entreprise/EntrepriseComponent";
+import DatesComponent from "../components/entreprise/DatesComponent";
+import ContactsComponent from "../components/entreprise/ContactsComponent";
+import MissionsComponent from "../components/entreprise/MissionsComponent";
 
 export default {
   name:      "EntrepriseView",
+  components: {MissionsComponent, ContactsComponent, EntrepriseComponent, DatesComponent},
   data() {
     return {
       entreprise: {
+        id: "",
         name: "",
         type: "",
         siret: "",
-        address: "",
-        dates: "",
+        address: {},
+        dates: [],
         contacts : [],
-        missions: ""
+        missions: []
       }
     };
   },

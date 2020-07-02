@@ -52,7 +52,9 @@ export default {
     [CREATING_CONTACT_SUCCESS](state, contact) {
       state.isLoading = false;
       state.error     = null;
-      state.contacts['hydra:member'].push(contact);
+      if(state.contacts['hydra:member'] !== undefined) {
+        state.contacts['hydra:member'].push(contact);
+      }
     },
     [CREATING_CONTACT_ERROR](state, error) {
       state.isLoading = false;
@@ -95,7 +97,9 @@ export default {
     [UPDATING_CONTACT_SUCCESS](state, contact) {
       state.isLoading = false;
       state.error     = null;
-      state.contacts['hydra:member'].push(contact);
+      if(state.contacts['hydra:member'] !== undefined) {
+        state.contacts['hydra:member'].push(contact);
+      }
       state.contact = contact;
     },
     [UPDATING_CONTACT_ERROR](state, error) {
@@ -196,8 +200,9 @@ export default {
     },
     async delete({commit}, data) {
       commit(DELETING_CONTACT);
+      console.log(data)
       try {
-        let response = await ContactsAPI.delete(data.contact);
+        let response = await ContactsAPI.delete(data.contact.id);
         commit(DELETING_CONTACT_SUCCESS, data.index);
         return response.data;
       } catch (error) {
