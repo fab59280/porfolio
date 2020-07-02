@@ -3,14 +3,14 @@ import axios from "axios";
 export default {
   create(entreprise) {
     console.log(entreprise);
-    return axios.post("/api/entreprises", {
-      entreprise
-    }, {
-      headers: {
-        "accept":       "application/ld+json",
-        "Content-Type": "application/ld+json"
-      }
-    });
+    return axios.post("/api/entreprises",
+      JSON.parse(JSON.stringify(entreprise))
+      , {
+        headers: {
+          "accept":       "application/ld+json",
+          "Content-Type": "application/ld+json"
+        }
+      });
   },
   findAll() {
     return axios.get("/api/entreprises", {

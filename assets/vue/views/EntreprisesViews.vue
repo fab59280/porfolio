@@ -51,7 +51,7 @@
                       v-model="entreprise.name"
                       type="text"
                       class="card-input"
-                      @keydown.enter="addTechno"
+                      @keydown.enter="addEntreprise"
                       @keydown.esc="cancelAdding"
                     >
                   </div>
@@ -62,7 +62,7 @@
                       v-model="entreprise.type"
                       type="text"
                       class="card-input"
-                      @keydown.enter="addTechno"
+                      @keydown.enter="addEntreprise"
                       @keydown.esc="cancelAdding"
                     >
                   </div>
@@ -77,7 +77,7 @@
                       v-model="entreprise.siret"
                       type="text"
                       class="card-input"
-                      @keydown.enter="addTechno"
+                      @keydown.enter="addEntreprise"
                       @keydown.esc="cancelAdding"
                     >
                   </div>
@@ -150,12 +150,9 @@ export default {
         'hydra:totalItems': ""
       },
       entreprise: {
-        name:      "",
+        name: "",
         siret: "",
         type: "",
-        address: {
-          city: ""
-        }
       },
       add: false
     };
@@ -181,14 +178,14 @@ export default {
     this.hydrate();
   },
   methods:   {
-    async addTechno() {
+    async addEntreprise() {
+      console.log(this.$data.entreprise);
       await this.$store.dispatch("entreprise/create", this.$data.entreprise)
-        .then(() => {
+        .then((response) => {
           this.$data.entreprise = {
             name:      "",
             siret: "",
-            type: "",
-            address: ""
+            type: ""
           };
           this.$data.add = false;
         }

@@ -57,7 +57,7 @@ export default {
     [CREATING_ENTREPRISE_SUCCESS](state, entreprise) {
       state.isLoading = false;
       state.error     = null;
-      state.entreprises.unshift(entreprise);
+      state.entreprises['hydra:member'].unshift(entreprise);
     },
     [CREATING_ENTREPRISE_ERROR](state, error) {
       state.isLoading = false;

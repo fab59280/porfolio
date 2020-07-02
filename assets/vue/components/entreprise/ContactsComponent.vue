@@ -52,7 +52,7 @@
           <div class="col-3">
             <input
               v-show="add === true"
-              :id="'item-add-contact-lastname'"
+              :id="'item-add-contact-role'"
               v-model="contact.role"
               required="required"
               type="text"
