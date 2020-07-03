@@ -89,6 +89,7 @@ class Contacts
         $this->mails      = new ArrayCollection();
         $this->telephones = new ArrayCollection();
         $this->dates      = new ArrayCollection();
+        $this->isActive   = true;
     }
 
 

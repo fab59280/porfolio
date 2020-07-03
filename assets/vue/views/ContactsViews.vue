@@ -26,7 +26,7 @@
                     +
                   </div>
                 </h4>
-                <div class="form-row card-list-header text-light font-weight-bold">
+                <div class="form-row card-list-header font-weight-bold">
                   <div class="col-3">
                     <label for="item-add-contact-firstname">Prénom</label>
                   </div>
@@ -34,10 +34,25 @@
                     <label for="item-add-contact-lastname">Nom</label>
                   </div>
                   <div class="col-3">
+                    <label for="item-add-contact-role">Role</label>
+                  </div>
+                  <div
+                    v-show="add===true"
+                    class="col-2"
+                  >
                     <label for="item-add-contact-entreprise">Entreprise</label>
                   </div>
+                  <div
+                    v-show="add===true"
+                    class="col-1"
+                  >
+                    <label for="item-add-contact-action">Action</label>
+                  </div>
                 </div>
-                <div class="row">
+                <div
+                  v-show="add===true"
+                  class="row row-list"
+                >
                   <div class="col-3">
                     <input
                       v-show="add===true"
@@ -63,6 +78,18 @@
                     >
                   </div>
                   <div class="col-3">
+                    <input
+                      v-show="add === true"
+                      :id="'item-add-contact-role'"
+                      v-model="contact.role"
+                      required="required"
+                      type="text"
+                      class="card-input"
+                      @keydown.enter="createContact"
+                      @keydown.esc="cancelAdding"
+                    >
+                  </div>
+                  <div class="col-2">
                     <select
                       v-show="add === true"
                       id="item-contact-entreprise"
@@ -79,7 +106,7 @@
                       </option>
                     </select>
                   </div>
-                  <div class="col-3">
+                  <div class="col-1">
                     <a
                       v-show="add === true"
                       href="#"

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between align-items-center">
+  <div class="d-flex justify-content-between align-items-center row row-list">
     <div class="text-light font-weight-bold col-3">
       <span
         v-show="editOffset !== index"
@@ -33,10 +33,25 @@
       >
     </div>
     <div
-      v-if="contact.entreprise !== undefined"
+      v-if="contact.role !== undefined"
       class="text-light font-weight-bold col-3"
     >
-      {{ contact.entreprise.name }}
+      <span
+        v-show="editOffset !== index"
+        class="link"
+        @click="$router.push('/contact-' + contact.id)"
+      >
+        {{ contact.role }}
+      </span>
+      <input
+        v-show="editOffset===index"
+        :id="'item-contact-role-' + index"
+        v-model="contact.role"
+        type="text"
+        class="card-input"
+        @keydown.enter="updateContact"
+        @keydown.esc="cancelEditing"
+      >
     </div>
     <div
       v-else

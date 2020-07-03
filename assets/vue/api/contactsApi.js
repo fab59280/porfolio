@@ -11,7 +11,6 @@ export default {
   },
   findAll(params) {
     let query = params !== undefined ? params : "";
-    console.log("/api/contacts" + query);
     return axios.get("/api/contacts" + query, {
       headers: {
         accept: "application/ld+json",

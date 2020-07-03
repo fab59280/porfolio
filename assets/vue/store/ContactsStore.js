@@ -136,16 +136,6 @@ export default {
       commit(FETCHING_CONTACTS);
       try {
         let response = await ContactsAPI.findAll(params);
-
-        for (let contact of response.data['hydra:member']) {
-          await ContactsAPI.findEntreprise(contact.id)
-            .then(response => {
-              if(response !== null) {
-                contact.entreprise = response.data;
-              }
-            });
-        }
-
         commit(FETCHING_CONTACTS_SUCCESS, response.data);
         return response.data;
       } catch (error) {
@@ -157,16 +147,6 @@ export default {
       commit(FETCHING_CONTACTS);
       try {
         let response = await ContactsAPI.findAll("?isActive=true");
-
-        for (let contact of response.data['hydra:member']) {
-          await ContactsAPI.findEntreprise(contact.id)
-            .then(response => {
-              if(response !== null) {
-                contact.entreprise = response.data;
-              }
-            });
-        }
-
         commit(FETCHING_CONTACTS_SUCCESS, response.data);
         return response.data;
       } catch (error) {
