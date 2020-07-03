@@ -58,7 +58,6 @@ class Entreprises
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Missions", mappedBy="entreprise", cascade={"persist", "remove"})
      * @Groups({"read", "write"})
-     * @ApiSubresource(maxDepth=1)
      */
     private $missions;
 

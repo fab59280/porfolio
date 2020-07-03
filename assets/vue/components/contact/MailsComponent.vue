@@ -67,7 +67,7 @@
             <span class="col-2">
               <a
                 href="#"
-                class="card-link card-link-primary"
+                class="card-link card-link-edit"
                 :title="'Edit ' + mail.email"
                 @click.prevent="startEditing(mail, index)"
               >

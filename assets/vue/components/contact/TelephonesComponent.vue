@@ -94,7 +94,7 @@
             <span class="col-2">
               <a
                 href="#"
-                class="card-link card-link-primary"
+                class="card-link card-link-edit"
                 :title="'Edit ' + phone.telephone"
                 @click.prevent="startEditing(phone, index)"
               >

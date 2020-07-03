@@ -13,7 +13,7 @@
             +
           </div>
         </h4>
-        <div class="form-row card-list-header text-light font-weight-bold">
+        <div class="form-row card-list-header font-weight-bold">
           <div class="col-3">
             <label for="item-add-contact-firstname">Prénom</label>
           </div>

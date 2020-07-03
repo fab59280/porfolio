@@ -4,13 +4,19 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MissionsRepository")
- * @ApiResource(attributes={"security"="is_granted('ROLE_ADMIN')"})
+ * @ApiResource(attributes={
+ *     "security"="is_granted('ROLE_ADMIN')",
+ *     "normalization_context"={"groups"={"read"}},
+ *     "denormalization_context"={"groups"={"write"}},
+ *     })
  */
 class Missions
 {
@@ -23,37 +29,43 @@ class Missions
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $end;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $tjm;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $nb_jours;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read", "write"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read", "write"})
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprises", inversedBy="missions")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      * @ApiSubresource(maxDepth=1)
      */
     private $entreprise;
@@ -74,24 +86,24 @@ class Missions
         return $this->id;
     }
 
-    public function getStart(): ?\DateTimeInterface
+    public function getStart(): ?DateTimeInterface
     {
         return $this->start;
     }
 
-    public function setStart(?\DateTimeInterface $start): self
+    public function setStart(?DateTimeInterface $start): self
     {
         $this->start = $start;
 
         return $this;
     }
 
-    public function getEnd(): ?\DateTimeInterface
+    public function getEnd(): ?DateTimeInterface
     {
         return $this->end;
     }
 
-    public function setEnd(?\DateTimeInterface $end): self
+    public function setEnd(?DateTimeInterface $end): self
     {
         $this->end = $end;
 

@@ -148,7 +148,7 @@
                 v-show="show === true"
                 href="#"
                 class="card-link card-link-primary"
-                :title="'See Notes'"
+                :title="'Hide Notes'"
                 @click.prevent="hideNotes(index)"
               >
                 <i
@@ -157,7 +157,7 @@
               </a>
               <a
                 href="#"
-                class="card-link card-link-primary"
+                class="card-link card-link-edit"
                 :title="'Edit ' + d.date"
                 @click.prevent="startEditing(d, index)"
               >

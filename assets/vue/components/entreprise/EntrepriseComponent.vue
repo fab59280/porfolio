@@ -11,7 +11,7 @@
           >
             <a
               href="#"
-              class="card-link card-link-primary"
+              class="card-link card-link-edit"
               :title="'Edit ' + entreprise.name"
               @click.prevent="startEditing(entreprise)"
             >
@@ -75,18 +75,16 @@
           <div
             class="col-2"
           >
-            <a
-              :href="'https://www.google.fr/maps/place/' + entreprise.address.address.replace(/\s/g, '+').replace(/[,]/g, ' ') + ',' + entreprise.address.postcode +
-                ',' +
-                entreprise.address.city"
-              target="_blank"
+            <p
+              id="localization"
               class="card-link card-link-primary"
-              :title="'Edit ' + entreprise.name"
+              :title="'Voir sur la carte ' + entreprise.name"
+              @click="redirect"
             >
               <i
                 class="fa fa-map-marker"
               />
-            </a>
+            </p>
           </div>
           <div
             v-show="edit === true"
@@ -155,6 +153,15 @@ export default {
     }
   },
   methods: {
+    redirect() {
+      console.log(this.entreprise.address.address);
+      const url = 'https://www.google.fr/maps/place/' + this.entreprise.address.address.replace(/\s/g, '+').replace(/[,]/g, ' ') + ',' +
+            this.entreprise.address.postcode +
+            ',' +
+            this.entreprise.address.city
+      console.log(url);
+      window.open(url);
+    },
     updateInfos() {
       this.saveEntreprise();
     },

@@ -53,6 +53,7 @@
 }
 
 .card-link {
+    cursor: pointer;
     @include hover {
         text-decoration : none;
     }
@@ -335,6 +336,10 @@
             }
         }
         
+        &-edit {
+            color: color(green);
+        }
+        
         &-danger {
             color : color(light-orange);
             
@@ -385,6 +390,7 @@
         padding-bottom : .875rem;
         
         &-header {
+            color: color(blue-light);
             margin-top    : .875rem;
             margin-bottom : .875rem;
             border-bottom : 1px solid color(gray);

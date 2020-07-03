@@ -13,7 +13,7 @@
             +
           </div>
         </h4>
-        <div class="form-row card-list-header text-light font-weight-bold">
+        <div class="form-row card-list-header font-weight-bold">
           <div class="col-3">
             <label for="item-add-dates-date">Date</label>
           </div>
@@ -175,7 +175,7 @@
                 v-show="show === true && editOffset === index"
                 href="#"
                 class="card-link card-link-primary"
-                :title="'See Notes'"
+                :title="'Hide Notes'"
                 @click.prevent="hideNotes(index)"
               >
                 <i
@@ -293,7 +293,7 @@ export default {
       this.$data.editPost = {}
     },
     async saveContact(add = false) {
-      let url = add === true ? 'date/create' : 'dates/update';
+      let url = add === true ? 'date/create' : 'date/update';
       let data = add === true ? this.$data.rdv : this.$data.editPost;
 
       await this.$store.dispatch(url, data)

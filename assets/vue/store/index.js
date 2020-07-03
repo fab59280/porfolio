@@ -3,9 +3,10 @@ import vuex from "vuex";
 import Addresses from "./AddressesStore";
 import ContactsStore from "./ContactsStore";
 import DatesStore from "./DatesStore";
-import EntrepriseModule from "./EntreprisesStore";
+import EntrepriseStore from "./EntreprisesStore";
 import LoginStore from "./LoginStore";
-import TechModule from "./TechnosStore";
+import TechStore from "./TechnosStore";
+import MissionsStore from "./MissionsStore";
 
 Vue.use(vuex);
 
@@ -14,8 +15,9 @@ export default new vuex.Store({
     address: Addresses,
     contact: ContactsStore,
     date: DatesStore,
-    entreprise: EntrepriseModule,
+    entreprise: EntrepriseStore,
     login: LoginStore,
-    tech: TechModule
+    mission: MissionsStore,
+    tech: TechStore
   }
 });

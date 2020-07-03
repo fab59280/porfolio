@@ -11,7 +11,7 @@
           >
             <a
               href="#"
-              class="card-link card-link-primary"
+              class="card-link card-link-edit"
               :title="'Edit ' + contact.entreprise.name"
               @click.prevent="startEditing(contact)"
             >

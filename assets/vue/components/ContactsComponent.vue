@@ -47,7 +47,7 @@
     <div class="col-3">
       <a
         href="#"
-        class="card-link card-link-primary"
+        class="card-link card-link-edit"
         :title="'Edit ' + contact.firstname + contact.lastname"
         @click.prevent="startEditing(contact, index)"
       >
