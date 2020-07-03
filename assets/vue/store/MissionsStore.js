@@ -1,27 +1,27 @@
 import MissionAPI from "../api/missionsApi";
 
-const CREATING_MISSION          = "CREATING_MISSION",
-  CREATING_MISSION_SUCCESS  = "CREATING_MISSION_SUCCESS",
-  CREATING_MISSION_ERROR    = "CREATING_MISSION_ERROR",
-  FETCHING_MISSIONS         = "FETCHING_MISSIONS",
-  FETCHING_CONTACTS         = "FETCHING_CONTACTS",
-  FETCHING_MISSIONS_SUCCESS = "FETCHING_MISSIONS_SUCCESS",
-  FETCHING_CONTACTS_SUCCESS = "FETCHING_CONTACTS_SUCCESS",
-  FETCHING_MISSION_SUCCESS  = "FETCHING_MISSION_SUCCESS",
-  FETCHING_MISSIONS_ERROR   = "FETCHING_MISSIONS_ERROR",
-  UPDATING_MISSION          = "UPDATING_MISSION",
-  UPDATING_MISSION_SUCCESS  = "UPDATING_MISSION_SUCCESS",
-  UPDATING_MISSION_ERROR    = "UPDATING_MISSION_ERROR";
+const CREATING_MISSION            = "CREATING_MISSION",
+  CREATING_MISSION_SUCCESS    = "CREATING_MISSION_SUCCESS",
+  CREATING_MISSION_ERROR      = "CREATING_MISSION_ERROR",
+  FETCHING_MISSIONS           = "FETCHING_MISSIONS",
+  FETCHING_ENTREPRISE         = "FETCHING_ENTREPRISE",
+  FETCHING_MISSIONS_SUCCESS   = "FETCHING_MISSIONS_SUCCESS",
+  FETCHING_ENTREPRISE_SUCCESS = "FETCHING_ENTREPRISE_SUCCESS",
+  FETCHING_MISSION_SUCCESS    = "FETCHING_MISSION_SUCCESS",
+  FETCHING_MISSIONS_ERROR     = "FETCHING_MISSIONS_ERROR",
+  UPDATING_MISSION            = "UPDATING_MISSION",
+  UPDATING_MISSION_SUCCESS    = "UPDATING_MISSION_SUCCESS",
+  UPDATING_MISSION_ERROR      = "UPDATING_MISSION_ERROR";
 
 
 export default {
   namespaced: true,
   state:      {
-    isLoading: false,
-    error:     null,
-    missions:  [],
-    mission:   "",
-    contacts:  []
+    isLoading:  false,
+    error:      null,
+    missions:   [],
+    mission:    "",
+    entreprise: ""
   },
   getters:    {
     isLoading(state) {
@@ -45,8 +45,8 @@ export default {
     mission(state) {
       return state.mission;
     },
-    contacts(state) {
-      return state.contacts;
+    entreprise(state) {
+      return state.entreprise;
     }
   },
   mutations:  {
@@ -83,10 +83,10 @@ export default {
       state.error     = null;
       state.missions  = [];
     },
-    [FETCHING_CONTACTS](state) {
-      state.isLoading = true;
-      state.error     = null;
-      state.contacts  = [];
+    [FETCHING_ENTREPRISE](state) {
+      state.isLoading  = true;
+      state.error      = null;
+      state.entreprise = "";
     },
     [FETCHING_MISSIONS_SUCCESS](state, missions) {
       state.isLoading = false;
@@ -98,10 +98,10 @@ export default {
       state.error     = null;
       state.mission   = mission;
     },
-    [FETCHING_CONTACTS_SUCCESS](state) {
-      state.isLoading = false;
-      state.error     = null;
-      state.contacts  = [];
+    [FETCHING_ENTREPRISE_SUCCESS](state, entreprise) {
+      state.isLoading  = false;
+      state.error      = null;
+      state.entreprise = entreprise;
     },
     [FETCHING_MISSIONS_ERROR](state, error) {
       state.isLoading = false;
@@ -145,12 +145,12 @@ export default {
         return null;
       }
     },
-    async findContacts({commit}, url) {
-      commit(FETCHING_CONTACTS);
+    async findEntreprise({commit}, url) {
+      commit(FETCHING_ENTREPRISE);
       try {
         let response                 = await MissionAPI.findSubResource(url);
         response.data.is_initialized = true;
-        commit(FETCHING_CONTACTS_SUCCESS, response.data);
+        commit(FETCHING_ENTREPRISE_SUCCESS, response.data);
         return response.data;
       } catch (error) {
         commit(FETCHING_MISSIONS_ERROR, error);

@@ -21,7 +21,7 @@
             <label for="item-add-contact-lastname">Nom</label>
           </div>
           <div class="col-3">
-            <label for="item-add-contact-entreprise">Rôle</label>
+            <label for="item-add-contact-role">Rôle</label>
           </div>
         </div>
         <div class="row">

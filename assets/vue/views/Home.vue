@@ -14,22 +14,36 @@
       </div>
     </div>
     <div class="row mt-3">
-      <div class="col-12 col-sm-6 col-md-6 col-xl-3 grid-margin stretch-card">
+      <div class="col-12 col-sm-6 col-md-6 col-xl-6 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">
-              Technos
+              Missions
             </h4>
+            <div class="form-row card-list-header font-weight-bold">
+              <div class="col-5">
+                <label for="item-list-missions-title">Titre</label>
+              </div>
+              <div class="col-3">
+                <label for="item-list-missions-start">Début</label>
+              </div>
+              <div class="col-3">
+                <label for="item-list-missions-end">Fin</label>
+              </div>
+              <div class="col-1">
+                <label for="item-list-missions-tjm">TJM</label>
+              </div>
+            </div>
             <p class="text-small">
-              {{ technos['hydra:member'].length }} Technos enregistrées
+              {{ missions['hydra:member'].length }} Missions renseignées
             </p>
             <div
-              v-for="(tech, index) in getTechnos"
-              :key="tech.id"
+              v-for="(mission, index) in getMissions"
+              :key="mission.id"
               class=""
             >
-              <dash-techno-component
-                :techno="tech"
+              <dash-missions-component
+                :mission="mission"
                 :index="index"
               />
             </div>
@@ -43,8 +57,19 @@
               Annuaire
             </h4>
             <p class="text-small">
-              {{ contacts['hydra:member'].length }} Contacts enregistrés
+              {{ contacts['hydra:member'].length }} Contacts actifs
             </p>
+            <div class="form-row card-list-header font-weight-bold">
+              <div class="col-4">
+                <label for="item-list-contact-firstname">Prénom</label>
+              </div>
+              <div class="col-4">
+                <label for="item-list-contact-lastname">Nom</label>
+              </div>
+              <div class="col-4">
+                <label for="item-list-contact-role">Rôle</label>
+              </div>
+            </div>
             <div
               v-for="contact in getContacts"
               :key="contact.id"
@@ -57,19 +82,57 @@
           </div>
         </div>
       </div>
+      <div class="col-12 col-sm-6 col-md-6 col-xl-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">
+              Entreprises
+            </h4>
+            <p class="text-small">
+              {{ entreprises['hydra:member'].length }} Entreprises référencées
+            </p>
+            <div class="form-row card-list-header font-weight-bold">
+              <div class="col-3">
+                <label for="item-list-entreprise-name">Nom</label>
+              </div>
+              <div class="col-3">
+                <label for="item-list-entreprise-type">Type</label>
+              </div>
+              <div class="col-3">
+                <label for="item-list-entreprise-siret">Siret</label>
+              </div>
+              <div class="col-3">
+                <label for="item-list-entreprise-city">Ville</label>
+              </div>
+            </div>
+            <div
+              v-for="(entreprise, index) in getEntreprises"
+              :key="entreprise.id"
+              class=""
+            >
+              <dash-entreprises-component
+                :entreprise="entreprise"
+                :index="index"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import DashTechnoComponent from "../components/dashboard/DashTechnoComponent";
 import DashContactsComponent from "../components/dashboard/DashContactsComponent";
+import DashMissionsComponent from "../components/dashboard/DashMissionsComponent";
+import DashEntreprisesComponent from "../components/dashboard/DashEntreprisesComponent";
 
 export default {
   name: "Home",
   components: {
-    DashTechnoComponent,
-    DashContactsComponent
+    DashContactsComponent,
+    DashMissionsComponent,
+    DashEntreprisesComponent
   },
   props: {
     user:{
@@ -81,7 +144,7 @@ export default {
   },
   data() {
     return {
-      technos: {
+      missions: {
         '@id': "",
         '@context': "",
         '@type': "",
@@ -95,25 +158,36 @@ export default {
         'hydra:member': [],
         'hydra:totalItems': ""
       },
+      entreprises: {
+        '@id': "",
+        '@context': "",
+        '@type': "",
+        'hydra:member': [],
+        'hydra:totalItems': ""
+      },
     };
   },
   computed:{
-    getTechnos() {
-      return this.$store.getters["tech/technos"];
+    getMissions() {
+      return this.$store.getters["mission/missions"];
     },
     getContacts() {
       return this.$store.getters["contact/contacts"]
+    },
+    getEntreprises() {
+      return this.$store.getters["entreprise/entreprises"]
     }
   },
   beforeMount() {
-    this.hydrateTechnos();
+    this.hydrateMissions();
     this.hydrateContacts();
+    this.hydrateEntreprises();
   },
   methods:   {
-    async hydrateTechnos() {
-      await this.$store.dispatch("tech/findAll")
+    async hydrateMissions() {
+      await this.$store.dispatch("mission/findAll")
         .then(data => {
-          this.$data.technos = data;
+          this.$data.missions = data;
         })
         .catch(error => {
           console.log(error);
@@ -123,6 +197,15 @@ export default {
       await this.$store.dispatch("contact/findAllActive")
         .then(data => {
           this.$data.contacts = data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    async hydrateEntreprises() {
+      await this.$store.dispatch("entreprise/findAll")
+        .then(data => {
+          this.$data.entreprises = data;
         })
         .catch(error => {
           console.log(error);

@@ -1,14 +1,19 @@
 <template>
-  <div class="d-flex justify-content-between align-items-center">
-    <div class="text-light font-weight-bold">
-      {{ contact.firstname }} {{ contact.lastname }}
+  <div class="d-flex justify-content-between align-items-center row row-list">
+    <div class="text-light font-weight-bold col-4">
+      <span
+        class="link link--special"
+        @click="$router.push('/contact-' + contact.id)"
+      >
+        {{ contact.firstname }} {{ contact.lastname }}
+      </span>
     </div>
 
-    <div class="text-light font-weight-bold">
-      {{ contact.entreprise.name }}
+    <div class="text-light font-weight-bold col-4">
+      {{ contact.role }}
     </div>
 
-    <div class="text-info font-weight-bold d-flex justify-content-between align-items-center text-extra-small">
+    <div class="text-info font-weight-bold d-flex justify-content-between align-items-center text-extra-small col-4">
       <a
         v-if="contact.mails.length > 0"
         :href="'mailto:' + contact.mails[0].email"
