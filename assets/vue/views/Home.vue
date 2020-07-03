@@ -8,20 +8,6 @@
               <h3 class="text-light font-weight-bold mb-0 mr-5">
                 Welcome to Dashboard
               </h3>
-              <ul class="dashboard-link-btn-wrap mt-lg-0 mt-sm-2">
-                <li>
-                  <a
-                    href="#"
-                    class="text-danger"
-                  ><span><i class="mdi mdi-cube-outline" /></span>Activities</a>
-                </li>
-                <li>
-                  <a href="#"><span><i class="mdi mdi-signal" /></span>Statistics</a>
-                </li>
-                <li>
-                  <a href="#"><span><i class="mdi mdi-file-document-outline" /></span>Summary</a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

@@ -187,8 +187,7 @@
                     }
                 }
                 &.dropdown {
-                    /*.dropdown-menu {
-                        @extend .dropdownAnimation;
+                    .dropdown-menu {
                         border: none;
                         -webkit-box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
                         -moz-box-shadow: 0px 3px 21px 0px rgba(0, 0, 0, 0.2);
@@ -231,6 +230,9 @@
                                                 margin-left: .625rem;
                                                 margin-top: .25rem;
                                                 font-size: .875rem;
+                                                &--link {
+                                                    color: color(lightest-orange);
+                                                }
                                             }
                                             .item-detail {
                                                 color: $body-color;
@@ -253,7 +255,7 @@
                                 }
                             }
                         }
-                    }*/
+                    }
                     .navbar-dropdown {
                         position: absolute;
                         font-size: 0.9rem;

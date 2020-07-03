@@ -54,10 +54,7 @@
               <div class="flat-dropdown-header">
                 <div class="d-flex">
                   <div>
-                    <span class="profile-name font-weight-bold">{{ user.username }}</span>
-                    <p class="profile-designation">
-                      {{ user.roles[0] }}
-                    </p>
+                    <span class="profile-name font-weight-bold">{{ user.username }} | {{ user.roles[0] }}</span>
                   </div>
                 </div>
               </div>
@@ -68,27 +65,12 @@
                 <ul class="list-profile-items">
                   <li class="profile-item">
                     <a
-                      href="/account"
-                      class="profile-dropdown-link"
-                    >
-                      <div class="d-flex align-items-center">
-                        <i class="mdi mdi-account-outline text-primary" />
-                        <div>
-                          <h5 class="item-title">My Profile</h5>
-                          <p class="item-detail">Account settings and more</p>
-                        </div>
-                      </div>
-                    </a>
-                  </li>
-                  <li class="profile-item">
-                    <a
                       href="/logout"
                       class="profile-dropdown-link"
                     >
                       <div class="d-flex align-items-center">
-                        <i class="mdi mdi-power text-dark" />
                         <div>
-                          <h5 class="item-title mt-0">Logout</h5>
+                          <h5 class="item-title item-title--link mt-0">Logout</h5>
                         </div>
                       </div>
                     </a>
