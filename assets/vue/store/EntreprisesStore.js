@@ -137,6 +137,14 @@ export default {
       try {
         let response = await EntrepriseAPI.findOneById(id);
         commit(FETCHING_ENTREPRISE_SUCCESS, response.data);
+        if(response.data.address === undefined) {
+          response.data.address = {
+            address :'',
+            postcode:'',
+            city:'',
+            country:''
+          }
+        }
         return response.data;
       } catch (error) {
         commit(FETCHING_ENTREPRISES_ERROR, error);

@@ -82,7 +82,7 @@ export default {
     async createEntreprise() {
       const result = await this.$store.dispatch("entreprise/create", this.$data.entreprises);
       if (result !== null) {
-        this.$data.entreprises = this.  $store.getters["entreprise/entreprises"];
+        this.$data.entreprises = this.$store.getters["entreprise/entreprises"];
       }
     },
     async fetchEntreprise() {
