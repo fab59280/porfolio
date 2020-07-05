@@ -2,12 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Symfony 5 with a Vue.js SPA</title>
+    <title>Portfolio WebTotem</title>
     {#<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">#}
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
     {{ encore_entry_link_tags('app') }}
-
+    <meta name="robots" content="noindex, nofollow">
 </head>
 <body>
 <div id="app" data-is-authenticated="{{ isAuthenticated }}" data-user="{{ user }}"></div>
