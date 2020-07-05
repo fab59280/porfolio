@@ -126,6 +126,16 @@ export default {
       try {
         let response = await EntrepriseAPI.findAll();
         commit(FETCHING_ENTREPRISES_SUCCESS, response.data);
+        response.data['hydra:member'].forEach(entreprise => {
+          if(entreprise.address === undefined) {
+            entreprise.address = {
+              address :'',
+              postcode:'',
+              city:'',
+              country:''
+            }
+          }
+        });
         return response.data;
       } catch (error) {
         commit(FETCHING_ENTREPRISES_ERROR, error);
