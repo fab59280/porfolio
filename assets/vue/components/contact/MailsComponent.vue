@@ -44,11 +44,11 @@
           <div
             v-for="(mail, index) in contact.mails"
             :key="mail.id"
-            class="justify-content-between"
+            class="justify-content-between row row-list"
           >
             <span
               v-show="editOffset !== index"
-              class="col-5"
+              class="col-10"
             >
               <a
                 :href="'mailto:' + mail.email"

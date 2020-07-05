@@ -58,7 +58,7 @@
           <div
             v-for="(phone, index) in contact.telephones"
             :key="phone.id"
-            class="justify-content-between"
+            class="justify-content-between row row-list"
           >
             <span
               v-show="editOffset !== index"
