@@ -31,6 +31,10 @@
           <p v-if="entreprise.siret !== null">
             {{ entreprise.siret }}
           </p>
+          <label
+            v-show="edit===true"
+            for="item-edit-entreprise-name"
+          >Nom</label>
           <input
             v-show="edit===true"
             :id="'item-entreprise-name'"
@@ -40,6 +44,10 @@
             @keydown.enter="updateInfos"
             @keydown.esc="cancelEditing"
           >
+          <label
+            v-show="edit===true"
+            for="item-edit-entreprise-type"
+          >Type</label>
           <input
             v-show="edit===true"
             :id="'item-entreprise-type'"
@@ -49,6 +57,10 @@
             @keydown.enter="updateInfos"
             @keydown.esc="cancelEditing"
           >
+          <label
+            v-show="edit===true"
+            for="item-edit-entreprise-siret"
+          >Siret</label>
           <input
             v-show="edit===true"
             :id="'item-entreprise-siret'"
@@ -90,6 +102,10 @@
             v-show="edit === true"
             class="text-light font-weight-bold"
           >
+            <label
+              v-show="edit===true"
+              for="item-edit-entreprise-address-address"
+            >Adresse</label>
             <input
               v-show="edit===true"
               :id="'item-entreprise-address-address'"
@@ -99,6 +115,10 @@
               @keydown.enter="updateInfosAddresses"
               @keydown.esc="cancelEditing"
             >
+            <label
+              v-show="edit===true"
+              for="item-edit-entreprise-address-postcode"
+            >Code Postal</label>
             <input
               v-show="edit===true"
               :id="'item-entreprise-address-postcode'"
@@ -108,6 +128,10 @@
               @keydown.enter="updateInfosAddresses"
               @keydown.esc="cancelEditing"
             >
+            <label
+              v-show="edit===true"
+              for="item-edit-entreprise-address-city"
+            >Ville</label>
             <input
               v-show="edit===true"
               :id="'item-entreprise-address-city'"
@@ -116,7 +140,10 @@
               class="card-input"
               @keydown.enter="updateInfosAddresses"
               @keydown.esc="cancelEditing"
-            >
+            ><label
+              v-show="edit===true"
+              for="item-edit-entreprise-address-country"
+            >Pays (FR)</label>
             <input
               v-show="edit===true"
               :id="'item-entreprise-address-country'"
