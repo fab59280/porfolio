@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-3">
+                  <div class="col-2">
                     <input
                       v-show="add===true"
                       :id="'item-add-entreprise-name'"
@@ -126,7 +126,11 @@
                   </div>
                   <div
                     v-show="add === true"
-                    class="col-3"
+                    class="col-2"
+                  />
+                  <div
+                    v-show="add === true"
+                    class="col-2"
                   />
                   <div class="col-2">
                     <input
