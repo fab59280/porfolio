@@ -27,11 +27,41 @@
                   </div>
                 </h4>
                 <div class="form-row card-list-header font-weight-bold">
-                  <div class="col-3">
-                    <label for="item-add-contact-firstname">Prénom</label>
+                  <div
+                    class="col-3"
+                    title="sort by firstname"
+                  >
+                    <label
+                      class="card-link"
+                      for="item-add-contact-firstname"
+                      @click="sort('firstname')"
+                    >Prénom</label>
+                    <i
+                      v-if="currentSort === 'firstname' && currentSortDir === 'desc'"
+                      class="fa fa-angle-down"
+                    />
+                    <i
+                      v-if="currentSort === 'firstname' && currentSortDir === 'asc'"
+                      class="fa fa-angle-up"
+                    />
                   </div>
-                  <div class="col-3">
-                    <label for="item-add-contact-lastname">Nom</label>
+                  <div
+                    class="col-3"
+                    title="sort by lastname"
+                  >
+                    <label
+                      class="card-link"
+                      for="item-add-contact-lastname"
+                      @click="sort('lastname')"
+                    >Nom</label>
+                    <i
+                      v-if="currentSort === 'lasstname' && currentSortDir === 'desc'"
+                      class="fa fa-angle-down"
+                    />
+                    <i
+                      v-if="currentSort === 'lasstname' && currentSortDir === 'asc'"
+                      class="fa fa-angle-up"
+                    />
                   </div>
                   <div class="col-3">
                     <label for="item-add-contact-role">Role</label>
@@ -148,7 +178,7 @@
                   class="text-light font-weight-bold card-list"
                 >
                   <div
-                    v-for="(cont, index) in getContacts"
+                    v-for="(cont, index) in contacts['hydra:member']"
                     :key="cont.id"
                     class="card-list-items"
                   >
@@ -191,7 +221,9 @@ export default {
       },
       add: false,
       entreprise: "",
-      entreprises: ""
+      entreprises: "",
+      currentSort:'id',
+      currentSortDir:'asc'
     };
   },
   computed:  {
@@ -212,7 +244,7 @@ export default {
     },
     getEntreprises() {
       return this.$store.getters["entreprise/entreprises"];
-    }
+    },
   },
   beforeMount() {
     this.hydrate();
@@ -274,6 +306,21 @@ export default {
         lastname: "",
         entreprise: ""
       };
+    },
+    sort:function(s) {
+      //if s == current sort, reverse
+      if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir=== 'asc' ? 'desc' : 'asc';
+      }
+      this.currentSort = s;
+
+      return this.$data.contacts['hydra:member'].sort((a,b) => {
+        let modifier = 1;
+        if(this.currentSortDir === 'desc') modifier = -1;
+        if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
     }
   }
 };

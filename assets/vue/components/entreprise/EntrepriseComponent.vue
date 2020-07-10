@@ -112,7 +112,7 @@
               v-model="entreprise.address.address"
               type="text"
               class="card-input"
-              @keydown.enter="updateInfosAddresses"
+              @keydown.enter="updateInfos"
               @keydown.esc="cancelEditing"
             >
             <label
@@ -125,7 +125,7 @@
               v-model="entreprise.address.postcode"
               type="text"
               class="card-input"
-              @keydown.enter="updateInfosAddresses"
+              @keydown.enter="updateInfos"
               @keydown.esc="cancelEditing"
             >
             <label
@@ -138,7 +138,7 @@
               v-model="entreprise.address.city"
               type="text"
               class="card-input"
-              @keydown.enter="updateInfosAddresses"
+              @keydown.enter="updateInfos"
               @keydown.esc="cancelEditing"
             ><label
               v-show="edit===true"
@@ -150,7 +150,7 @@
               v-model="entreprise.address.country"
               type="text"
               class="card-input"
-              @keydown.enter="updateInfosAddresses"
+              @keydown.enter="updateInfos"
               @keydown.esc="cancelEditing"
             >
           </div>
@@ -192,9 +192,6 @@ export default {
     updateInfos() {
       this.saveEntreprise();
     },
-    updateInfosAddresses() {
-      this.saveEntrepriseAddresse();
-    },
     startEditing(entreprise) {
       this.$data.edit        = true
       this.$data.editPost    = entreprise
@@ -218,14 +215,6 @@ export default {
           this.$data.editPost    = {}
         });
     },
-    async saveEntrepriseAddresse() {
-      await this.$store.dispatch('address/update', this.address)
-        .then(() => {
-          this.edit              = false;
-          this.$data.editPostOri = {}
-          this.$data.editPost    = {}
-        });
-    }
   }
 }
 </script>

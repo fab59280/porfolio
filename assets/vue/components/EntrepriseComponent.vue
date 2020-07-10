@@ -2,7 +2,7 @@
   <div
     class="form-row"
   >
-    <div class="col-3">
+    <div class="col-2">
       <span
         v-show="editOffset !== index"
         class="link"
@@ -38,7 +38,25 @@
         @keydown.esc="cancelEditing"
       >
     </div>
-    <div class="col-3">
+    <div class="col-2">
+      <span
+        v-show="editOffset !== index"
+        v-if="entreprise.address !== undefined"
+      >
+        {{ entreprise.address.postcode }}
+      </span>
+      <input
+        v-if="entreprise.address !== undefined"
+        v-show="editOffset===index"
+        :id="'item-entreprise-postcode-' + index"
+        v-model="entreprise.address.postcode"
+        type="text"
+        class="card-input"
+        @keydown.enter="updateEntreprise"
+        @keydown.esc="cancelEditing"
+      >
+    </div>
+    <div class="col-2">
       <span
         v-show="editOffset !== index"
         v-if="entreprise.address !== undefined"
