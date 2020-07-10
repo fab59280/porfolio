@@ -26,7 +26,18 @@
             v-show="edit === false"
             class="p-title"
           >
-            {{ entreprise.name }} | {{ entreprise.type }}
+            {{ entreprise.name }} | {{ entreprise.type }} |
+            <a
+              v-if="entreprise.phone.telephone !== ''"
+              :href="'tel:' + entreprise.phone.telephone"
+              :title="'Téléphoner ' + entreprise.phone.telephone"
+            > {{ entreprise.phone.telephone }}</a>
+            <span
+              v-else
+              class="text-light font-weight-bold"
+            >
+              -
+            </span>
           </p>
           <p v-if="entreprise.siret !== null">
             {{ entreprise.siret }}
@@ -81,6 +92,7 @@
             class="text-light font-weight-bold col-10"
           >
             <p>{{ entreprise.address.address }}</p>
+            <p>{{ entreprise.address.complement }}</p>
             <p>{{ entreprise.address.postcode }} {{ entreprise.address.city }}</p>
             <p>{{ entreprise.address.country }}</p>
           </div>
@@ -88,6 +100,7 @@
             class="col-2"
           >
             <p
+              v-show="edit !== true"
               id="localization"
               class="card-link card-link-primary"
               :title="'Voir sur la carte ' + entreprise.name"
@@ -97,6 +110,34 @@
                 class="fa fa-map-marker"
               />
             </p>
+          </div>
+          <div
+            v-show="edit === false"
+            class="text-light font-weight-bold"
+          >
+                &nbsp;
+          </div>
+          <div
+            v-show="edit === true"
+            class="text-light font-weight-bold col-12"
+          >
+            <label
+              for="item-edit-entreprise-phone"
+            >Téléphone</label>
+            <input
+              :id="'item-entreprise-phone'"
+              v-model="entreprise.phone.telephone"
+              type="text"
+              class="card-input"
+              @keydown.enter="updateInfos"
+              @keydown.esc="cancelEditing"
+            >
+          </div>
+          <div
+            v-show="edit === true"
+            class="text-light font-weight-bold"
+          >
+                &nbsp;
           </div>
           <div
             v-show="edit === true"
@@ -110,6 +151,19 @@
               v-show="edit===true"
               :id="'item-entreprise-address-address'"
               v-model="entreprise.address.address"
+              type="text"
+              class="card-input"
+              @keydown.enter="updateInfos"
+              @keydown.esc="cancelEditing"
+            >
+            <label
+              v-show="edit===true"
+              for="item-edit-entreprise-address-address"
+            >Complement</label>
+            <input
+              v-show="edit===true"
+              :id="'item-entreprise-address-complement'"
+              v-model="entreprise.address.complement"
               type="text"
               class="card-input"
               @keydown.enter="updateInfos"
@@ -140,7 +194,8 @@
               class="card-input"
               @keydown.enter="updateInfos"
               @keydown.esc="cancelEditing"
-            ><label
+            >
+            <label
               v-show="edit===true"
               for="item-edit-entreprise-address-country"
             >Pays (FR)</label>
@@ -153,6 +208,32 @@
               @keydown.enter="updateInfos"
               @keydown.esc="cancelEditing"
             >
+          </div>
+        </div>
+        <div class="row border-top">
+          <div class="text-light font-weight-bold col-12">
+            <p
+              v-show="edit !== true"
+            >
+              {{ entreprise.description }}
+            </p>
+
+            <label
+              v-show="edit===true"
+              for="item-edit-entreprise-description"
+            >Description</label>
+            <div class="textarea-zone">
+              <textarea
+                v-show="edit===true"
+                :id="'item-entreprise-description'"
+                v-model="entreprise.description"
+                type="textarea"
+                rows="10"
+                class="card-input"
+                @keydown.ctrl.enter="updateInfos"
+                @keydown.esc="cancelEditing"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -73,6 +73,18 @@ class Entreprises
      */
     private $siret;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Phones", cascade={"persist", "remove"})
+     * @Groups({"read", "write"})
+     */
+    private $phone;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read", "write"})
+     */
+    private $description;
+
 
     public function __construct()
     {
@@ -223,6 +235,30 @@ class Entreprises
     public function setSiret(?string $siret): self
     {
         $this->siret = $siret;
+
+        return $this;
+    }
+
+    public function getPhone(): ?Phones
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?Phones $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

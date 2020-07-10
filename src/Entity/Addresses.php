@@ -47,6 +47,12 @@ class Addresses
      */
     private $postcode;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
+     */
+    private $complement;
+
     public function __construct()
     {
         if(!$this->country) {
@@ -103,6 +109,18 @@ class Addresses
     public function setPostcode(string $postcode): self
     {
         $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    public function getComplement(): ?string
+    {
+        return $this->complement;
+    }
+
+    public function setComplement(?string $complement): self
+    {
+        $this->complement = $complement;
 
         return $this;
     }

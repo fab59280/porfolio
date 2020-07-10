@@ -135,6 +135,12 @@ export default {
               country:''
             }
           }
+          if(entreprise.phone === undefined) {
+            entreprise.phone = {
+              telephone :'',
+              type:''
+            }
+          }
         });
         return response.data;
       } catch (error) {
@@ -153,6 +159,12 @@ export default {
             postcode:'',
             city:'',
             country:''
+          }
+        }
+        if(response.data.phone === undefined) {
+          response.data.phone = {
+            telephone :'',
+            type:''
           }
         }
         return response.data;

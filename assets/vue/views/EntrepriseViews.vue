@@ -48,10 +48,12 @@ export default {
         name: "",
         type: "",
         siret: "",
+        description: "",
         address: {},
         dates: [],
         contacts : [],
-        missions: []
+        missions: [],
+        phone: {}
       }
     };
   },
