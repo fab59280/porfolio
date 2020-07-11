@@ -180,7 +180,6 @@ export default {
     },
     async delete({commit}, data) {
       commit(DELETING_CONTACT);
-      console.log(data)
       try {
         let response = await ContactsAPI.delete(data.contact.id);
         commit(DELETING_CONTACT_SUCCESS, data.index);

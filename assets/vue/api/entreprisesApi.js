@@ -49,8 +49,8 @@ export default {
     }
     )
   },
-  delete(id) {
-    return axios.delete("/api/entreprises/" + id,
+  delete(entreprise) {
+    return axios.delete("/api/entreprises/" + entreprise.id,
       {
         headers: {
           "accept":       "application/ld+json"

@@ -11,7 +11,10 @@ const CREATING_ENTREPRISE      = "CREATING_ENTREPRISE",
   FETCHING_ENTREPRISES_ERROR   = "FETCHING_ENTREPRISES_ERROR",
   UPDATING_ENTREPRISE          = "UPDATING_ENTREPRISE",
   UPDATING_ENTREPRISE_SUCCESS  = "UPDATING_ENTREPRISE_SUCCESS",
-  UPDATING_ENTREPRISE_ERROR    = "UPDATING_ENTREPRISE_ERROR";
+  UPDATING_ENTREPRISE_ERROR    = "UPDATING_ENTREPRISE_ERROR",
+  DELETING_ENTREPRISE          = "DELETING_ENTREPRISE",
+  DELETING_ENTREPRISE_SUCCESS  = "DELETING_ENTREPRISE_SUCCESS",
+  DELETING_ENTREPRISE_ERROR    = "DELETING_ENTREPRISE_ERROR";
 
 
 export default {
@@ -107,7 +110,20 @@ export default {
       state.isLoading = false;
       state.error     = error;
       state.entreprises   = [];
-    }
+    },
+    [DELETING_ENTREPRISE](state) {
+      state.isLoading = true;
+      state.error     = null;
+    },
+    [DELETING_ENTREPRISE_SUCCESS](state, index) {
+      state.isLoading = false;
+      state.error     = null;
+      state.entreprises['hydra:member'].splice(index, 1);
+    },
+    [DELETING_ENTREPRISE_ERROR](state, error) {
+      state.isLoading = false;
+      state.error     = error;
+    },
   },
   actions:    {
     async create({commit}, entreprise) {
@@ -194,6 +210,16 @@ export default {
       } catch (error) {
         commit(UPDATING_ENTREPRISE_ERROR, error);
         return null;
+      }
+    },
+    async delete({commit}, data) {
+      commit(DELETING_ENTREPRISE);
+      try {
+        let response = await EntrepriseAPI.delete(data.entreprise);
+        commit(DELETING_ENTREPRISE_SUCCESS, data.index);
+        return response.data;
+      } catch (error) {
+        commit(DELETING_ENTREPRISE_ERROR, error);
       }
     }
   }

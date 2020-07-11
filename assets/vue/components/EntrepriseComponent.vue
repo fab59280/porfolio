@@ -148,8 +148,8 @@ export default {
           console.log(error);
         });
     },
-    async deleteEntreprise(entreprise) {
-      await this.$store.dispatch("entreprise/delete", entreprise)
+    async deleteEntreprise(entreprise, index) {
+      await this.$store.dispatch("entreprise/delete", {entreprise: entreprise, index: index })
         .catch(error => {
           console.log(error);
         });
