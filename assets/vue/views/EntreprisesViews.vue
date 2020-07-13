@@ -217,7 +217,7 @@ export default {
         type: "",
       },
       add: false,
-      currentSort:'id',
+      currentSort:'name',
       currentSortDir:'asc'
     };
   },

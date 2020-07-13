@@ -8,13 +8,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PhonesRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TelephoneRepository")
  * @ApiResource(attributes={"security"="is_granted('ROLE_ADMIN')",
  *     "normalization_context"={"groups"={"read"}},
  *     "denormalization_context"={"groups"={"write"}},
  *     })
  */
-class Phones
+class Telephone
 {
     /**
      * @ORM\Id()
@@ -35,13 +35,6 @@ class Phones
      * @Groups({"read", "write"})
      */
     private $type;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Contacts", inversedBy="telephones")
-     * @ApiSubresource(maxDepth=1)
-     */
-    private $contacts;
-
 
     public function getId(): ?int
     {
@@ -71,17 +64,4 @@ class Phones
 
         return $this;
     }
-
-    public function getContacts(): ?Contacts
-    {
-        return $this->contacts;
-    }
-
-    public function setContacts(?Contacts $contacts): self
-    {
-        $this->contacts = $contacts;
-
-        return $this;
-    }
-
 }

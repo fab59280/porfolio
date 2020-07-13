@@ -43,6 +43,13 @@ class Entreprises
     private $address;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Telephone", cascade={"persist", "remove"})
+     * @Groups({"read", "write"})
+     * @ApiSubresource(maxDepth=1)
+     */
+    private $phone;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Contacts", mappedBy="entreprises", cascade={"persist", "remove"})
      * @Groups({"read", "write"})
      * @ApiSubresource(maxDepth=1)
@@ -72,12 +79,6 @@ class Entreprises
      * @Groups({"read", "write"})
      */
     private $siret;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Phones", cascade={"persist", "remove"})
-     * @Groups({"read", "write"})
-     */
-    private $phone;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -239,12 +240,12 @@ class Entreprises
         return $this;
     }
 
-    public function getPhone(): ?Phones
+    public function getPhone(): ?Telephone
     {
         return $this->phone;
     }
 
-    public function setPhone(?Phones $phone): self
+    public function setPhone(?Telephone $phone): self
     {
         $this->phone = $phone;
 
